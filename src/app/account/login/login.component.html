@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <h1>Login</h1>
     <div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -18,11 +18,30 @@
             </div>
             <div>
                 <button [disabled]="loading">
-                    <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
                     Login
                 </button>
                 <a routerLink="../register">Register</a>
             </div>
         </form>
     </div>
-</div>
+</div> -->
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1>Login</h1>
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" formControlName="username"/>
+      <div *ngIf="submitted && f.username.errors">
+        <div *ngIf="f.username.errors.required">Username is required</div>
+     </div>
+  
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" formControlName="password"/>
+      <div *ngIf="submitted && f.password.errors">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+      </div>
+          
+      <button type="submit" [disabled]="loading">Login</button>
+      <button class="btn-reg" routerLink="../register">Register</button>
+    </div>
+  </form>

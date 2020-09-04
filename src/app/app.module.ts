@@ -17,8 +17,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptorInterceptor } from '../app/helpers/jwt-interceptor.interceptor'
 import { ErrorInterceptorInterceptor } from '../app/helpers/error-interceptor.interceptor'
 import { fakeBackendProvider } from '../app/helpers/fake-backend-interceptor.interceptor'
-import { ButtonComponent } from '../app/shared/button/button.component'
-import {  CardComponent  } from '../app/shared/card/card.component'
+import { ButtonComponent } from '../app/shared-components/button/button.component'
+import {  CardComponent  } from '../app/shared-components/card/card.component'
+import { ModalComponent } from '../app/shared-components/modal/modal.component'
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {  CardComponent  } from '../app/shared/card/card.component'
     AppComponent,
     HomeComponent,
     ButtonComponent,
-    CardComponent
+    CardComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

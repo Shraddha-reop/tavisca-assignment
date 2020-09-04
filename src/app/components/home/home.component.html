@@ -1,76 +1,69 @@
 <div *ngIf="user">
     <div class="item1">
-        <app-button [buttonConfig]="{text: 'Share Link'}" (click)="OnClick()"></app-button>
-        <app-button [buttonConfig]="{text: 'Logout'}" (click)="logout()"></app-button>
+        <div class="head-line"> <h1>Movie Share</h1><span><img src="../assets/svg/movie-recorder-svgrepo-com.svg"/></span></div>
+        <div class="btns">
+            <label class="switch">
+                <input  id="darkTheme" type="checkbox"  [formControl]="darkTheme"/>
+                <span class="slider round"></span>
+              </label>
+            <app-button class="btn-add" [buttonConfig]="{text: 'Add Movies'}" (click)="OnClick()"></app-button>
+        <app-button class="btn-logout" [buttonConfig]="{src: '../../../assets/svg/logout.svg'}" (click)="logout()"></app-button>
+        </div>
+        
     </div>
-    <div *ngIf="add" >
+    <div *ngIf="add" class="item2">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div>
+            <div class="container">
                 <label>Title</label>
                 <input type="text" formControlName="title" />
                 <div *ngIf="submitted && f.title.errors">
                     <div *ngIf="f.title.errors.required">Title is required</div>
                 </div>
-            </div>
-            <div>
                 <label>Description</label>
                 <input type="text" formControlName="desc" />
                 <div *ngIf="submitted && f.desc.errors">
                     <div *ngIf="f.desc.errors.required">Description is required</div>
                 </div>
-            </div>
-            <div>
                 <label>Category</label>
                 <input type="text" formControlName="category" />
                 <div *ngIf="submitted && f.category.errors">
                     <div *ngIf="f.category.errors.required">Category is required</div>
                 </div>
-            </div>
-            <div>
                 <label>Release Date</label>
                 <input type="date" formControlName="releaseDate" />
                 <div *ngIf="submitted && f.releaseDate.errors">
                     <div *ngIf="f.releaseDate.errors.required">Release Date is required</div>
                 </div>
-            </div>
-            <div>
                 <button>
                     SHARE
                 </button>
             </div>
+               
         </form>
     </div>
-    <div *ngIf="isUpdate">
-        <form [formGroup]="updateForm" (ngSubmit)="onUpdateLink()">
-            <div>
+    <div *ngIf="isUpdate" class="item2">
+        <form [formGroup]="updateForm" (ngSubmit)="onUpdateLink()" >
+            <div class="container">
                 <label>Title</label>
                 <input type="text" formControlName="updateTitle" />
                 <div *ngIf="submitted && fc.updateTitle.errors">
                     <div *ngIf="fc.updateTitle.errors.required">Title is required</div>
                 </div>
-            </div>
-            <div>
                 <label>Description</label>
                 <input type="text" formControlName="updateDesc" />
                 <div *ngIf="submitted && fc.updateDesc.errors">
                     <div *ngIf="fc.updateDesc.errors.required">Description is required</div>
                 </div>
-            </div>
-            <div>
                 <label>Category</label>
                 <input type="text" formControlName="updateCategory" />
                 <div *ngIf="submitted && fc.updateCategory.errors">
                     <div *ngIf="fc.updateCategory.errors.required">Category is required</div>
                 </div>
-            </div>
-            <div>
                 <label>Release Date</label>
                 <input type="date" formControlName="updateYear" />
                 <div *ngIf="submitted && fc.updateYear.errors">
                     <div *ngIf="fc.updateYear.errors.required">Release Date is required</div>
                 </div>
-            </div>
-            <div>
                 <button>
                     Update
                 </button>
@@ -85,7 +78,6 @@
                         year="{{data.year}}" isLoggedIn = "user" id = "{{data.id}}" (change) = "onUpdate($event)" (delete) = "onDelete($event)">
                     </sa-card>
                 </div>
-                <!-- <button (click)="onUpdate(data.id)">UPDATE</button><button (click)="onDelete(data.id)">DELETE</button> -->
             </div>
         </div>
     </section>

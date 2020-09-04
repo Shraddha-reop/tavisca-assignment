@@ -5,9 +5,10 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.model';
 import { Observable } from 'rxjs';
 import { selectIsLoggedIn, selectData } from 'src/app/store/app.selectors';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IsLoggedIn, SaveSharedLinks, DeleteLink, FetchUserData, UpdateLink } from 'src/app/store/app.actions';
 import * as uuid from 'uuid';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
   updateForm: FormGroup;
   user: boolean;
   add: boolean = false;
+  darkTheme = new FormControl(false);
   submitted = false;
   isUpdate = false;
   public id = null;
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     public store: Store<AppState>,
+    private themeService: ThemeService,
     private formBuilder: FormBuilder) {
     this.store.dispatch(new FetchUserData());
     this.store.dispatch(new IsLoggedIn(true));
@@ -35,6 +38,14 @@ export class HomeComponent implements OnInit {
      
       this.user = val
     })
+
+    this.darkTheme.valueChanges.subscribe(value => {
+      if (value) {
+        this.themeService.toggleDark();
+      } else {
+        this.themeService.toggleLight();
+      }
+    });
   }
 
   ngOnInit(): void {

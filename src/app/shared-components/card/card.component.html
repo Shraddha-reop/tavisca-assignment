@@ -1,0 +1,13 @@
+<div class="card">
+    <div class="container">
+        <img src="../../../assets/svg/movie.svg">
+        <div class="data">
+            <h2><b>{{title}}</b></h2>
+            <p>{{desc}}</p>
+            <p>Category: <span> &nbsp;<b>{{category}}</b></span></p>
+            <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>
+        </div>
+        <app-button class="btn-update" *ngIf="isLoggedIn" [buttonConfig]="{src: '../../../assets/svg/update.svg'}" (click) = "update()"></app-button>
+        <app-button class="btn-remove" *ngIf="isLoggedIn" [buttonConfig]="{src: '../../../assets/svg/delete.svg'}" (click) = "remove()"></app-button>
+    </div>
+</div>
