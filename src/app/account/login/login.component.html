@@ -1,0 +1,28 @@
+<div class="container">
+    <h1>Login</h1>
+    <div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div>
+                <label>Username</label>&nbsp;
+                <input type="text" formControlName="username"/>
+                <div *ngIf="submitted && f.username.errors">
+                    <div *ngIf="f.username.errors.required">Username is required</div>
+                </div>
+            </div>
+            <div>
+                <label>Password</label>&nbsp;
+                <input type="password" formControlName="password" />
+                <div *ngIf="submitted && f.password.errors">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                </div>
+            </div>
+            <div>
+                <button [disabled]="loading">
+                    <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
+                    Login
+                </button>
+                <a routerLink="../register">Register</a>
+            </div>
+        </form>
+    </div>
+</div>

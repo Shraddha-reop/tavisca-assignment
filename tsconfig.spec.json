@@ -1,0 +1,21 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jest",
+      "node"
+    ],
+    "esModuleInterop": true, // 2
+    // "emitDecoratorMetadata": true // 3
+  },
+  "files": [
+    "src/test",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts", "src/app/components/flexbox-website/flexbox-website.component.specs", "src/app/components/dynamic-loading/dynamic-loading.component.spec", "src/app/components/dynamic-loading/dynamic"
+  ]
+}

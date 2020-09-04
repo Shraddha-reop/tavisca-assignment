@@ -1,0 +1,21 @@
+<div class="grid-container">
+  <div class="item1" *ngIf="!user">
+    <div class="head-line"> <h1>Share Movie</h1><span><img src="../assets/svg/video.svg"/></span></div>
+    <div>
+      <app-button [buttonConfig]="{text: 'Login'}" routerLink="/account/login"></app-button>
+      &nbsp;
+      <app-button [buttonConfig]="{text: 'Register'}" routerLink="/account/register"></app-button>
+    </div>
+   
+  </div>
+  <div class="item2">
+    <router-outlet></router-outlet>
+  </div>
+  <section class="item3" *ngIf="!user">
+    <div *ngFor="let data of (selectData$ | async)">
+      <sa-card title = "{{data.title}}" desc = "{{data.description}}" category = "{{data.category}}" year = "{{data.year}}"></sa-card>
+      <!-- <h1>{{data.title}}</h1>
+      <p>{{data.description}}</p> -->
+    </div>
+  </section>
+</div>
