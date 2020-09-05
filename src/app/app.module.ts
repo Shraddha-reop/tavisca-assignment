@@ -19,7 +19,7 @@ import { ErrorInterceptorInterceptor } from '../app/helpers/error-interceptor.in
 import { fakeBackendProvider } from '../app/helpers/fake-backend-interceptor.interceptor'
 import { ButtonComponent } from '../app/shared-components/button/button.component'
 import {  CardComponent  } from '../app/shared-components/card/card.component'
-import { ModalComponent } from '../app/shared-components/modal/modal.component'
+import {ModalComponent } from '../app/shared-components/modal/modal.component'
 
 
 @NgModule({
@@ -27,8 +27,7 @@ import { ModalComponent } from '../app/shared-components/modal/modal.component'
     AppComponent,
     HomeComponent,
     ButtonComponent,
-    CardComponent,
-    ModalComponent
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +50,6 @@ import { ModalComponent } from '../app/shared-components/modal/modal.component'
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorInterceptor, multi: true },
-
-    // provider used to create fake backend
     fakeBackendProvider
   ],
   bootstrap: [AppComponent],

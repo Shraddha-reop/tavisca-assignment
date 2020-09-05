@@ -161,8 +161,12 @@
   }
   }
 .item3 { grid-area: main;
-         display: grid; 
-         grid-template-columns: auto auto auto; }
+         display: grid;  
+         width: 100%;
+    column-width: 19em;
+    -webkit-column-width: 19em;
+    column-gap: 1em;
+    -webkit-column-gap: 1em;}
 .item4 { grid-area: right; }
 .item5 { grid-area: footer; }
 

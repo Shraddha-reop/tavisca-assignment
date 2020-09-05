@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
   }
   OnClick() {
     this.add = true
+    this.isUpdate = false
   }
 
   onUpdate(id) {
@@ -75,12 +76,18 @@ export class HomeComponent implements OnInit {
     
     this.id = id
     this.isUpdate = true
+    this.add = false
   }
   onDelete(id) {
     console.log(id);
     
     this.store.dispatch(new DeleteLink(id));
     this.store.dispatch(new FetchUserData());
+  }
+
+  onCancel(){
+    this.add = false;
+    this.isUpdate = false
   }
 
   onUpdateLink() {

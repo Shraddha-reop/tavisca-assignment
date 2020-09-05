@@ -1,7 +1,6 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 
 import { AppServiceService } from './app-service.service';
-import { AppService } from '../app.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateTestingModule } from 'ngx-translate-testing';
 describe('AppServiceService', () => {
@@ -11,23 +10,9 @@ describe('AppServiceService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AppService],
+      providers: [AppServiceService],
       imports: [
-          HttpClientTestingModule,
-          TranslateTestingModule.withTranslations('en', {
-            Sitetitle: "Angular Multi Language Site",
-            Name: "Name",
-            NameError: "I am sure you must have a name!",
-            Email: "Email address",
-            PhoneNo: "Phone No",
-            Password: "Password",
-            Bio: "Enter bio",
-            TermsConditions: "I agree to terms and conditions.",
-            Submit: "Submit",
-            CardTitle: "Card Title",
-            CardText: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-            GoSomewhere:"Go somewhere"
-          })
+          HttpClientTestingModule
       ]
     });
     injector = getTestBed();
@@ -41,8 +26,9 @@ describe('AppServiceService', () => {
 
   it('should fetch activity overview', () => {
     const spy = jest.fn();
-    service.fetchData().subscribe(spy);
-    const mockReq = httpMock.expectOne(req => req.url.includes(`https://demo6335756.mockable.io/Countries`));
+    const requestBody = {};
+    service.addLinks(requestBody).subscribe(spy);
+    const mockReq = httpMock.expectOne(req => req.url.includes(`http://localhost:3000/posts`));
     mockReq.flush({});
     expect(spy).toHaveBeenCalledWith({});
 });

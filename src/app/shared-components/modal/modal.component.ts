@@ -9,7 +9,7 @@ export class ModalComponent implements OnInit {
     constructor(private el: ElementRef) { }
     ngOnInit() {
         // we added this so that when the backdrop is clicked the modal is closed.
-        this.el.nativeElement.addEventListener('click', () => {
+        this.el.nativeElement.addEventListener('click', ()=> {
             this.close()
         })
     }

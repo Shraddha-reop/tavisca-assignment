@@ -7,8 +7,9 @@
       "jest",
       "node"
     ],
-    "esModuleInterop": true, // 2
-    // "emitDecoratorMetadata": true // 3
+    "esModuleInterop": true, 
+    "emitDecoratorMetadata": true,
+    // "experimentalDecorators": true
   },
   "files": [
     "src/test",
@@ -16,6 +17,6 @@
   ],
   "include": [
     "src/**/*.spec.ts",
-    "src/**/*.d.ts", "src/app/components/flexbox-website/flexbox-website.component.specs", "src/app/components/dynamic-loading/dynamic-loading.component.spec", "src/app/components/dynamic-loading/dynamic"
+    "src/**/*.d.ts"
   ]
 }
