@@ -9,7 +9,7 @@
     ],
     "esModuleInterop": true, 
     "emitDecoratorMetadata": true,
-    // "experimentalDecorators": true
+    "experimentalDecorators": true
   },
   "files": [
     "src/test",

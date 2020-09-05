@@ -1,22 +1,22 @@
 :host {
-      color: var(--text-color);
-    }
+    color: var(--text-color);
+  }
 .text-btn{
-      background-color: #1abc9c;
-      color: white;
-      margin: 8px 0;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      font-size: 18px;
-  }
+    background-color: #1abc9c;
+    color: white;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
 
-  .img-btn{
-        position: 'relative';
-        width: '100px';
-        height: '100px';
-        cursor: pointer;
-  }
+.img-btn{
+      position: 'relative';
+      width: '100px';
+      height: '100px';
+      cursor: pointer;
+}
 
 //   .storybook-button--secondary {
 //       color: #333;
@@ -35,4 +35,4 @@
 //       font-size: 16px;
 //       padding: 12px 24px;
 //     }
-    
+  

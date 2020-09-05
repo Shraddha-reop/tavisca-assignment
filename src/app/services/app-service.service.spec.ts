@@ -3,6 +3,7 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { AppServiceService } from './app-service.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateTestingModule } from 'ngx-translate-testing';
+import {environment } from '../../environments/environment'
 describe('AppServiceService', () => {
   let service: AppServiceService;
   let injector: TestBed;
@@ -24,12 +25,38 @@ describe('AppServiceService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should fetch activity overview', () => {
+  it('should Add Links', () => {
     const spy = jest.fn();
     const requestBody = {};
     service.addLinks(requestBody).subscribe(spy);
-    const mockReq = httpMock.expectOne(req => req.url.includes(`http://localhost:3000/posts`));
+    const mockReq = httpMock.expectOne(req => req.url.includes(`${environment.apiUrl}/posts`));
     mockReq.flush({});
     expect(spy).toHaveBeenCalledWith({});
+});
+
+it('should fetch Links',() => {
+  const spy = jest.fn();
+  const requestBody = {};
+  service.fetchLinks().subscribe(spy);
+  const mockReq = httpMock.expectOne(req => req.url.includes(`${environment.apiUrl}/posts`));
+  mockReq.flush({});
+  expect(spy).toHaveBeenCalledWith({});
+});
+
+it('should delete Links', () => {
+  const spy = jest.fn();
+  service.deleteLink(3).subscribe(spy);
+  const mockReq = httpMock.expectOne(req => req.url.includes(`${environment.apiUrl}/posts/${3}`));
+  mockReq.flush({});
+  expect(spy).toHaveBeenCalledWith({});
+});
+
+it('should update links', () => {
+  const spy = jest.fn();
+  const requestBody = {};
+  service.updateLink(3,requestBody).subscribe(spy);
+  const mockReq = httpMock.expectOne(req => req.url.includes(`${environment.apiUrl}/posts/${3}`));
+  mockReq.flush({});
+  expect(spy).toHaveBeenCalledWith({});
 });
 });

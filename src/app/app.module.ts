@@ -17,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptorInterceptor } from '../app/helpers/jwt-interceptor.interceptor'
 import { ErrorInterceptorInterceptor } from '../app/helpers/error-interceptor.interceptor'
 import { fakeBackendProvider } from '../app/helpers/fake-backend-interceptor.interceptor'
-import { ButtonComponent } from '../app/shared-components/button/button.component'
+import { ButtonComponent } from '../app/shared-components/btn-component/btn-component.component'
 import {  CardComponent  } from '../app/shared-components/card/card.component'
 import {ModalComponent } from '../app/shared-components/modal/modal.component'
 

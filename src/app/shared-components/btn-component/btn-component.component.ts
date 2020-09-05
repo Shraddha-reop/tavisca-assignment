@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  templateUrl: './btn-component.component.html',
+  styleUrls: ['./btn-component.component.scss']
 })
 export class ButtonComponent implements OnInit {
   @Input() buttonConfig: any;

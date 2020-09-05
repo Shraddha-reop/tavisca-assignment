@@ -6,13 +6,22 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { AppState } from './app.model';
 import { Store } from '@ngrx/store';
 import { AppActionType } from './store/app.actions';
-import { ButtonComponent } from './shared-components/button/button.component'
+import { ButtonComponent } from './shared-components/btn-component/btn-component.component'
 import { FormGroupDirective, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { CardComponent } from './shared-components/card/card.component';
 import { ThemeService } from './services/theme.service'
 import { of } from 'rxjs';
+
+async function rejected(promise) {
+  try {
+      await promise
+  } catch (e) {
+      return e
+  }
+  throw new Error('Expected promise to be rejected')
+}
 
 const toggleDark = {
   toggleDark() {
@@ -59,8 +68,7 @@ describe('AppComponent', () => {
           
         }),
         { provide: FormGroupDirective, useValue: formGroupDirective },
-        { provide: FormBuilder, useValue: formBuilder },
-        { provide: ThemeService, useValue: toggleDark }
+        { provide: FormBuilder, useValue: formBuilder }
       ]
     }).compileComponents();
   }));
@@ -72,6 +80,20 @@ describe('AppComponent', () => {
     component.ngOnInit();
   });
 
+  // test("I'm asynchronous", async () => {
+  //   const promise = Promise.reject("boom!")
+  //   expect("some precondition").toBeFalsy()
+  //   await rejected(promise)
+  //   expect("some postcondition").toBeTruthy()
+  // })
+  
+  it("I'm asynchronous", async () => {
+    const promise = Promise.reject("boom!")
+    expect("some precondition").toBeFalsy()
+    await rejected(promise)
+    expect("some postcondition").toBeTruthy()
+  })
+  
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -1,6 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { HomeComponent } from './home.component';
 import { AppServiceService } from '../../services/app-service.service'
 import { FormsModule, ReactiveFormsModule, FormGroupDirective, FormBuilder, FormGroup } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,10 +6,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ButtonComponent } from './btn-component.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+async function rejected(promise) {
+    try {
+        await promise
+    } catch (e) {
+        return e
+    }
+    throw new Error('Expected promise to be rejected')
+  }
+
+describe('ButtonComponent', () => {
+  let component: ButtonComponent;
+  let fixture: ComponentFixture<ButtonComponent>;
   let formGroupDirective: Partial<FormGroupDirective>;
   const formBuilder: FormBuilder = new FormBuilder();
   const router = {
@@ -24,7 +32,7 @@ describe('HomeComponent', () => {
       form: new FormGroup({})
     };
     TestBed.configureTestingModule({
-      declarations: [HomeComponent],
+      declarations: [ButtonComponent],
       imports: [FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
@@ -51,10 +59,21 @@ describe('HomeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(ButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+//   test("I'm asynchronous", async () => {
+  
+//   })
+
+  it("I'm asynchronous", async () => {
+    const promise = Promise.reject("boom!")
+    expect("some precondition").toBeFalsy()
+    await rejected(promise)
+    expect("some postcondition").toBeTruthy()
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();
