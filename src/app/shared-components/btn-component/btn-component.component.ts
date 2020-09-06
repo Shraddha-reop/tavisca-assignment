@@ -7,5 +7,5 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() buttonConfig: any = null;
-  constructor() {}
+  constructor() { }
 }

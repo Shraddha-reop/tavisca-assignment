@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   form: FormGroup;
   updateForm: FormGroup;
   user: boolean;
-  add: boolean = false;
+  add = false;
   darkTheme = new FormControl(false);
   submitted = false;
   isUpdate = false;
@@ -34,8 +34,8 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new FetchUserData());
     this.store.dispatch(new IsLoggedIn(true));
     this.selectIsLoggedIn$.subscribe(val => {
-      this.user = val
-    })
+      this.user = val;
+    });
 
     this.darkTheme.valueChanges.subscribe(value => {
       if (value) {
@@ -65,14 +65,14 @@ export class HomeComponent implements OnInit {
     this.accountService.logout();
   }
   OnClick() {
-    this.add = true
-    this.isUpdate = false
+    this.add = true;
+    this.isUpdate = false;
   }
 
   onUpdate(id) {
-    this.id = id
-    this.isUpdate = true
-    this.add = false
+    this.id = id;
+    this.isUpdate = true;
+    this.add = false;
     window.scrollTo(0, 0);
   }
   onDelete(id) {
@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
 
   onCancel() {
     this.add = false;
-    this.isUpdate = false
+    this.isUpdate = false;
   }
 
   onUpdateLink() {
@@ -96,10 +96,10 @@ export class HomeComponent implements OnInit {
       description: this.updateForm.value.updateDesc,
       year: this.updateForm.value.updateYear,
       category: this.updateForm.value.updateCategory
-    }
-    this.store.dispatch(new UpdateLink(this.id, requestBody))
-    this.store.dispatch(new FetchUserData())
-    this.isUpdate = false
+    };
+    this.store.dispatch(new UpdateLink(this.id, requestBody));
+    this.store.dispatch(new FetchUserData());
+    this.isUpdate = false;
   }
 
   get f() { return this.form.controls; }
@@ -108,11 +108,11 @@ export class HomeComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.id = null
+    this.id = null;
     if (this.form.invalid) {
       return;
     }
-    this.add = false
+    this.add = false;
     const myId = uuid.v4();
     const requestBody = {
       id: myId,
@@ -120,8 +120,8 @@ export class HomeComponent implements OnInit {
       description: this.form.value.desc,
       category: this.form.value.category,
       year: this.form.value.releaseDate
-    }
-    this.store.dispatch(new SaveSharedLinks(requestBody))
+    };
+    this.store.dispatch(new SaveSharedLinks(requestBody));
   }
 
 }

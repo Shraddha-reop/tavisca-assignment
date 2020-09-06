@@ -2,13 +2,23 @@
     color: var(--text-color);
   }
 .text-btn{
-    background-color: #1abc9c;
+    // background-color: #1abc9c;
     color: white;
-    margin: 8px 0;
-    border: none;
+    // margin: 8px 0;
+    // border: none;
+    // cursor: pointer;
+    // width: 100%;
+    // font-size: 18px;
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    border: 0;
+    border-radius: 3em;
     cursor: pointer;
-    width: 100%;
-    font-size: 18px;
+    display: inline-block;
+    line-height: 1;
+    background-color: #1abc9c;
+    font-size: 20px;
+    padding: 8px  0px;
 }
 
 .img-btn{

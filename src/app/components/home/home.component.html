@@ -2,10 +2,7 @@
     <div class="item1">
         <div class="head-line"> <h1>Movie Share</h1><span><img src="../assets/svg/movie-recorder-svgrepo-com.svg"/></span></div>
         <div class="btns">
-            <label class="switch">
-                <input  id="darkTheme" type="checkbox"  [formControl]="darkTheme"/>
-                <span class="slider round"></span>
-              </label>
+              <app-theme class="btn-theme"></app-theme>
             <app-button class="btn-add" [buttonConfig]="{text: 'Add Movies'}" (click)="OnClick()"></app-button>
           <app-button class="btn-logout" [buttonConfig]="{src: '../../../assets/svg/logout.svg'}" (click)="logout()"></app-button>
         </div>

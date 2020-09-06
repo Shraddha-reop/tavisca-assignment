@@ -23,7 +23,6 @@ export class FetchUserData implements Action {
 }
 
 export class FetchUserDataSuccess implements Action {
-    FETCH_USER_DATA_SUCCESS
     readonly type = AppActionType.FETCH_USER_DATA_SUCCESS;
     constructor(public payload: any) { }
 }

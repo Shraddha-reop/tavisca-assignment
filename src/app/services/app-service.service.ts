@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,8 @@ export class AppServiceService {
   }
 
   public updateLink(id, requestBody): Observable<any> {
-    console.log(id,requestBody);
-    
+    console.log(id, requestBody);
+
     return this.http.put<any>(`${environment.url}/posts/${id}`, requestBody);
   }
 }

@@ -28,7 +28,7 @@
       "app",
       "kebab-case"
     ],
-    "eofline": true,
+    "eofline": false,
     "import-blacklist": [
       true,
       "rxjs/Rx"
@@ -95,9 +95,24 @@
       }
     },
     "typedef": [
-      true,
+      false,
       "call-signature"
     ],
+    "no-trailing-whitespace": false,
+    "no-shadowed-variable": [
+      false,
+      {
+        "class": false,
+        "enum": false,
+        "function": false,
+        "interface": false,
+        "namespace": false,
+        "typeAlias": false,
+        "typeParameter": false,
+        "underscore": false
+      }
+    ],
+    
     "typedef-whitespace": {
       "options": [
         {

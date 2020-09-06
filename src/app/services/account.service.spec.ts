@@ -1,12 +1,9 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
-
-import { AppServiceService } from './app-service.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateTestingModule } from 'ngx-translate-testing';
 import { AccountService } from './account.service';
 import { provideMockStore } from '@ngrx/store/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment';
 describe('AccountService', () => {
   let service: AccountService;
   let injector: TestBed;
@@ -32,7 +29,7 @@ describe('AccountService', () => {
     });
     injector = getTestBed();
     service = TestBed.inject(AccountService);
-    httpMock = injector.get(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {
@@ -41,8 +38,8 @@ describe('AccountService', () => {
 
   it('should login user', () => {
     const spy = jest.fn();
-    const username = "user";
-    const password = "password"
+    const username = 'user';
+    const password = 'password';
     service.login(username, password).subscribe(spy);
     const mockReq = httpMock.expectOne(req => req.url.includes(`${environment.apiUrl}/users/authenticate`));
     mockReq.flush({});

@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
         public store: Store<AppState>
@@ -28,14 +27,13 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.form = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
     }
 
-   
+
     get f() { return this.form.controls; }
 
     onSubmit() {

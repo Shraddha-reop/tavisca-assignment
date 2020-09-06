@@ -1,20 +1,46 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, OnDestroy } from '@angular/core';
+import { ModalService } from './modal.service';
 
 @Component({
-    selector: 'sa-modal',
+    selector: 'app-modal',
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
-    constructor(private el: ElementRef) { }
-    ngOnInit() {
-        // we added this so that when the backdrop is clicked the modal is closed.
-        this.el.nativeElement.addEventListener('click', ()=> {
-            this.close()
-        })
+export class ModalComponent implements OnInit, OnDestroy {
+    @Input() id: string;
+    private element: any;
+
+    constructor(private modalService: ModalService, private el: ElementRef) {
+        this.element = el.nativeElement;
     }
-    close() {
-        this.el.nativeElement.classList.remove('sshow')
-        this.el.nativeElement.classList.add('hhidden')
+
+    ngOnInit(): void {
+        if (!this.id) {
+            console.error('modal must have an id');
+            return;
+        }
+        document.body.appendChild(this.element);
+
+        this.element.addEventListener('click', el => {
+            if (el.target.className === 'jw-modal') {
+                this.close();
+            }
+        });
+        this.modalService.add(this);
+    }
+
+    ngOnDestroy(): void {
+        this.modalService.remove(this.id);
+        this.element.remove();
+    }
+
+    open(): void {
+        this.element.style.display = 'block';
+        document.body.classList.add('jw-modal-open');
+    }
+
+    close(): void {
+        this.element.style.display = 'none';
+        document.body.classList.remove('jw-modal-open');
     }
 }

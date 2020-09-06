@@ -1,35 +1,29 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
-import { Component } from '@angular/core';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { AppState } from './app.model';
-import { Store } from '@ngrx/store';
-import { ButtonComponent } from './shared-components/btn-component/btn-component.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { RegisterComponent } from './register.component';
 import { FormGroupDirective, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideMockStore } from '@ngrx/store/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CardComponent } from './shared-components/card/card.component';
+import { Router } from '@angular/router';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ThemeComponent } from '../app/shared-components/theme-toggle/theme.component';
 
-
-describe('AppComponent', () => {
-  let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
-  // let store: MockStore<AppState>;
+describe('RegisterComponent', () => {
+  let component: RegisterComponent;
+  let fixture: ComponentFixture<RegisterComponent>;
   let formGroupDirective: Partial<FormGroupDirective>;
   const formBuilder: FormBuilder = new FormBuilder();
   const router = {
     navigate: jasmine.createSpy('navigate')
   };
+
   beforeEach(async(() => {
     formGroupDirective = {
       form: new FormGroup({})
     };
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent, ButtonComponent, CardComponent, ThemeComponent
-      ],
+      declarations: [RegisterComponent],
       imports: [FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
@@ -45,27 +39,24 @@ describe('AppComponent', () => {
               id: 1
             }
           },
+
         }),
         { provide: FormGroupDirective, useValue: formGroupDirective },
-        { provide: FormBuilder, useValue: formBuilder }
-      ]
-    }).compileComponents();
+        { provide: FormBuilder, useValue: formBuilder },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents();
   }));
+
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
-    // store = TestBed.get(Store);
     fixture.detectChanges();
     component.ngOnInit();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should logout user', () => {
-    const spy = jest.fn();
-    component.logout();
-    expect(spy).toHaveBeenCalledTimes(0);
   });
 });
