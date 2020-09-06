@@ -4,7 +4,7 @@
     "injectables": [
         {
             "name": "AccountService",
-            "id": "injectable-AccountService-f7767f86eae2b7738fae3e59348ab9ca",
+            "id": "injectable-AccountService-ac5b7199514dfb2f66736c1607c461b8",
             "file": "src/app/services/account.service.ts",
             "properties": [
                 {
@@ -85,7 +85,7 @@
                     "args": [
                         {
                             "name": "user",
-                            "type": "User"
+                            "type": ""
                         }
                     ],
                     "optional": false,
@@ -95,7 +95,7 @@
                     "jsdoctags": [
                         {
                             "name": "user",
-                            "type": "User",
+                            "type": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -104,7 +104,7 @@
                 }
             ],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { BehaviorSubject, Observable } from 'rxjs';\nimport { Router } from '@angular/router';\nimport { HttpClient } from '@angular/common/http';\nimport { map } from 'rxjs/operators';\nimport { User } from '../models/user'\nimport { environment } from '../../environments/environment';\nimport { Store } from '@ngrx/store';\nimport { AppState } from '../app.model';\nimport { IsLoggedIn } from '../store/app.actions';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class AccountService {\n  private userSubject: BehaviorSubject<User>;\n  public user: Observable<User>;\n\n  constructor(\n      private router: Router,\n      private http: HttpClient,\n      public store: Store<AppState>\n  ) {\n      this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));\n      this.user = this.userSubject.asObservable();\n  }\n\n  public get userValue(): User {\n      return this.userSubject.value;\n  }\n\n  login(username, password) {\n      return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })\n          .pipe(map(user => {\n              localStorage.setItem('user', JSON.stringify(user));\n              this.userSubject.next(user);\n              return user;\n          }));\n  }\n\n  logout() {\n      localStorage.removeItem('user');\n      this.userSubject.next(null);\n      this.router.navigate(['/']);\n      this.store.dispatch(new IsLoggedIn(false));\n  }\n\n  register(user: User) {\n      return this.http.post(`${environment.apiUrl}/users/register`, user);\n  }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { BehaviorSubject, Observable } from 'rxjs';\nimport { Router } from '@angular/router';\nimport { HttpClient } from '@angular/common/http';\nimport { map } from 'rxjs/operators';\nimport { User } from '../models/user';\nimport { environment } from '../../environments/environment';\nimport { Store } from '@ngrx/store';\nimport { AppState } from '../app.model';\nimport { IsLoggedIn } from '../store/app.actions';\n\n@Injectable({\n    providedIn: 'root'\n})\nexport class AccountService {\n    private userSubject: BehaviorSubject<User>;\n    public user: Observable<User>;\n\n    constructor(\n        private router: Router,\n        private http: HttpClient,\n        public store: Store<AppState>\n    ) {\n        this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));\n        this.user = this.userSubject.asObservable();\n    }\n\n    public get userValue(): User {\n        return this.userSubject.value;\n    }\n\n    login(username, password) {\n        return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })\n            .pipe(map(user => {\n                localStorage.setItem('user', JSON.stringify(user));\n                this.userSubject.next(user);\n                return user;\n            }));\n    }\n\n    logout() {\n        localStorage.removeItem('user');\n        this.userSubject.next(null);\n        this.router.navigate(['/']);\n        this.store.dispatch(new IsLoggedIn(false));\n    }\n\n    register(user) {\n        return this.http.post(`${environment.apiUrl}/users/register`, user);\n    }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -283,7 +283,7 @@
         },
         {
             "name": "AppServiceService",
-            "id": "injectable-AppServiceService-f122eb2f77ab16314ff7c343055e8547",
+            "id": "injectable-AppServiceService-da8edf9dd3d67929800fc76d97427802",
             "file": "src/app/services/app-service.service.ts",
             "properties": [
                 {
@@ -309,7 +309,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 18,
+                    "line": 16,
                     "modifierKind": [
                         114
                     ],
@@ -334,7 +334,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 22,
+                    "line": 20,
                     "modifierKind": [
                         114
                     ],
@@ -374,7 +374,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 26,
+                    "line": 24,
                     "modifierKind": [
                         114
                     ],
@@ -397,7 +397,7 @@
                 }
             ],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { HttpClient } from '@angular/common/http';\nimport {environment } from '../../environments/environment'\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class AppServiceService {\n  constructor(public http: HttpClient) { }\n\n  public fetchLinks(): Observable<any> {\n    console.log(environment.url,\"environment.apiUrl\");\n    \n    return this.http.get<any>(`${environment.url}/posts`);\n  }\n\n  public addLinks(requestBody): Observable<any> {\n    return this.http.post<any>(`${environment.url}/posts`, requestBody);\n  }\n\n  public deleteLink(id): Observable<any> {\n    return this.http.delete<any>(`${environment.url}/posts/${id}`);\n  }\n\n  public updateLink(id,requestBody): Observable<any> {\n    return this.http.patch<any>(`${environment.url}/posts/${id}`,requestBody);\n  }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { HttpClient } from '@angular/common/http';\nimport { environment } from '../../environments/environment'\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class AppServiceService {\n  constructor(public http: HttpClient) { }\n\n  public fetchLinks(): Observable<any> {\n    return this.http.get<any>(`${environment.url}/posts`);\n  }\n\n  public addLinks(requestBody): Observable<any> {\n    return this.http.post<any>(`${environment.url}/posts`, requestBody);\n  }\n\n  public deleteLink(id): Observable<any> {\n    return this.http.delete<any>(`${environment.url}/posts/${id}`);\n  }\n\n  public updateLink(id, requestBody): Observable<any> {\n    console.log(id,requestBody);\n    \n    return this.http.put<any>(`${environment.url}/posts/${id}`, requestBody);\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1403,7 +1403,7 @@
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-f6bab634c94c14bfd0907680f6972864",
+            "id": "component-AppComponent-ae3db476ce9f4d6e79f104a9059b8783",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1428,7 +1428,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 19
                 },
                 {
                     "name": "selectData$",
@@ -1436,7 +1436,7 @@
                     "type": "Observable<any>",
                     "optional": false,
                     "description": "",
-                    "line": 23,
+                    "line": 21,
                     "modifierKind": [
                         114
                     ]
@@ -1447,7 +1447,7 @@
                     "type": "Observable<boolean>",
                     "optional": false,
                     "description": "",
-                    "line": 22,
+                    "line": 20,
                     "modifierKind": [
                         114
                     ]
@@ -1457,7 +1457,7 @@
                     "type": "Store<AppState>",
                     "optional": false,
                     "description": "",
-                    "line": 25,
+                    "line": 26,
                     "modifierKind": [
                         114
                     ]
@@ -1467,7 +1467,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 18
                 }
             ],
             "methodsClass": [
@@ -1477,7 +1477,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 45
+                    "line": 46
                 },
                 {
                     "name": "ngOnInit",
@@ -1485,7 +1485,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 42
+                    "line": 43
                 }
             ],
             "hostBindings": [],
@@ -1493,11 +1493,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\nimport { AppState } from './app.model';\nimport { FetchUserData, IsLoggedIn } from './store/app.actions';\nimport { AppServiceService } from './services/app-service.service';\nimport { User } from './models/user';\nimport { AccountService } from './services/account.service';\nimport { Router } from '@angular/router';\nimport { Observable } from 'rxjs';\nimport { selectIsLoggedIn, selectData } from './store/app.selectors';\nimport { ThemeService } from '../app/services/theme.service'\nimport { FormControl } from '@angular/forms';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent implements OnInit{\n  user: boolean;\n  darkTheme = new FormControl(false);\n  public selectIsLoggedIn$: Observable<boolean> = this.store.select(selectIsLoggedIn);\n  public selectData$: Observable<any> = this.store.select(selectData);\n\n  constructor(private accountService: AccountService, private router: Router,public store: Store<AppState>,private themeService: ThemeService) {\n    this.store.dispatch(new IsLoggedIn(false))\n    this.store.dispatch(new FetchUserData());\n    this.selectIsLoggedIn$.subscribe(val => {\n      this.user = val\n      console.log(val);\n    })\n\n    this.darkTheme.valueChanges.subscribe(value => {\n      if (value) {\n        this.themeService.toggleDark();\n      } else {\n        this.themeService.toggleLight();\n      }\n    });\n  }\n\n  ngOnInit(){\n  }\n\n  logout() {\n    this.accountService.logout();\n  }\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\nimport { AppState } from './app.model';\nimport { FetchUserData, IsLoggedIn } from './store/app.actions';\nimport { AccountService } from './services/account.service';\nimport { Router } from '@angular/router';\nimport { Observable } from 'rxjs';\nimport { selectIsLoggedIn, selectData } from './store/app.selectors';\nimport { ThemeService } from '../app/services/theme.service';\nimport { FormControl } from '@angular/forms';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent implements OnInit {\n  user: boolean;\n  darkTheme = new FormControl(false);\n  public selectIsLoggedIn$: Observable<boolean> = this.store.select(selectIsLoggedIn);\n  public selectData$: Observable<any> = this.store.select(selectData);\n\n  constructor(\n    private accountService: AccountService,\n    private router: Router,\n    public store: Store<AppState>,\n    private themeService: ThemeService) {\n    this.store.dispatch(new IsLoggedIn(false));\n    this.store.dispatch(new FetchUserData());\n    this.selectIsLoggedIn$.subscribe(val => {\n      this.user = val;\n    });\n\n    this.darkTheme.valueChanges.subscribe(value => {\n      if (value) {\n        this.themeService.toggleDark();\n      } else {\n        this.themeService.toggleLight();\n      }\n    });\n  }\n\n  ngOnInit() {\n  }\n\n  logout() {\n    this.accountService.logout();\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ":host {\r\n  background-color: var(--primary-color);\r\n  color: var(--text-color);\r\n}\r\n\r\n.item1 { grid-area: header;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    background-color: #1abc9c;\r\n    height:80px;\r\n    .head-line{\r\n      display: flex;\r\n       justify-content: space-between;\r\n       width: 17rem;\r\n      h1{\r\n        \r\n        @media screen and (min-width: 320px) and (max-width: 480px) {\r\n          font-size: 14px;\r\n        }\r\n      }\r\n      img{\r\n        margin-top: 1rem;\r\n      };\r\n    }\r\n\r\n    .top-nav{\r\n      display: flex;\r\n      flex-flow: row;\r\n      margin: 1rem;\r\n      .btns{\r\n        display: flex;\r\n        justify-content: space-between;\r\n        width: 9rem;\r\n        \r\n      }\r\n      .switch {\r\n        position: relative;\r\n        display: inline-block;\r\n        width: 60px;\r\n        height: 34px;\r\n      }\r\n      .switch input { \r\n        opacity: 0;\r\n        width: 0;\r\n        height: 0;\r\n      }\r\n      \r\n      .slider {\r\n        position: absolute;\r\n        cursor: pointer;\r\n        top: 0;\r\n        left: 0;\r\n        right: 0;\r\n        bottom: 0;\r\n        background-color: black;\r\n        -webkit-transition: .4s;\r\n        transition: .4s;\r\n      }\r\n      \r\n      .slider:before {\r\n        position: absolute;\r\n        content: \"\";\r\n        height: 26px;\r\n        width: 26px;\r\n        left: 4px;\r\n        bottom: 4px;\r\n        background-color: #1abc9c;\r\n        -webkit-transition: .4s;\r\n        transition: .4s;\r\n      }    \r\n      input:checked + .slider {\r\n        background-color: white;\r\n      }\r\n      \r\n      input:focus + .slider {\r\n        box-shadow: 0 0 1px white;\r\n      }\r\n      \r\n      input:checked + .slider:before {\r\n        -webkit-transform: translateX(26px);\r\n        -ms-transform: translateX(26px);\r\n        transform: translateX(26px);\r\n      }\r\n      \r\n      /* Rounded sliders */\r\n      .slider.round {\r\n        border-radius: 34px;\r\n      }\r\n      \r\n      .slider.round:before {\r\n        border-radius: 50%;\r\n      }\r\n    }\r\n   \r\n}\r\n.item2 { grid-area: menu; }\r\n.item3 { grid-area: main;\r\n         display: grid;;\r\n         grid-template-columns: auto auto;\r\n         width: 100%;\r\n    column-width: 19em;\r\n    -webkit-column-width: 19em;\r\n    column-gap: 1em;\r\n    -webkit-column-gap: 1em;\r\n         \r\n.item4 { grid-area: right; }\r\n.item5 { grid-area: footer; }\r\n\r\n.grid-container {\r\n  display: grid;\r\n  grid-template-areas:\r\n    'header header header header header header'\r\n    'menu menu menu menu menu menu'\r\n    'main main main main main main'\r\n    'footer footer footer footer footer footer';\r\n  grid-gap: 10px;\r\n  padding: 10px;\r\n}\r\n\r\n.header {\r\n  overflow: hidden;\r\n  background-color: #f1f1f1;\r\n  padding: 20px 10px;\r\n}\r\n\r\n.header a {\r\n  float: left;\r\n  color: black;\r\n  text-align: center;\r\n  padding: 12px;\r\n  text-decoration: none;\r\n  font-size: 18px; \r\n  line-height: 25px;\r\n  border-radius: 4px;\r\n}\r\n\r\n.header a.logo {\r\n  font-size: 25px;\r\n  font-weight: bold;\r\n}\r\n\r\n.header a:hover {\r\n  background-color: #ddd;\r\n  color: black;\r\n}\r\n\r\n.header a.active {\r\n  background-color: dodgerblue;\r\n  color: white;\r\n}\r\n\r\n.header-right {\r\n  float: right;\r\n}\r\n\r\n@media screen and (max-width: 500px) {\r\n  .header a {\r\n    float: none;\r\n    display: block;\r\n    text-align: left;\r\n  }\r\n  \r\n  .header-right {\r\n    float: none;\r\n  }\r\n}\r\n\r\n}\r\n// .grid-container > div {\r\n// //   background-color: rgba(255, 255, 255, 0.8);\r\n//   text-align: center;\r\n//   padding: 20px 0;\r\n//   font-size: 30px;\r\n// }",
+                    "data": ":host {\r\n  background-color: var(--primary-color);\r\n  color: var(--text-color);\r\n}\r\n\r\n.item1 { grid-area: header;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    background-color: #1abc9c;\r\n    height:80px;\r\n    .head-line{\r\n      display: flex;\r\n       justify-content: space-between;\r\n       width: 17rem;\r\n      h1{\r\n        \r\n        @media screen and (min-width: 320px) and (max-width: 480px) {\r\n          font-size: 14px;\r\n        }\r\n      }\r\n      img{\r\n        margin-top: 1rem;\r\n      };\r\n    }\r\n\r\n    .top-nav{\r\n      display: flex;\r\n      flex-flow: row;\r\n      margin: 1rem;\r\n      .btns{\r\n        display: flex;\r\n        justify-content: space-between;\r\n        width: 9rem;\r\n        .btns-text{\r\n          cursor: pointer;\r\n        }\r\n      }\r\n      .switch {\r\n        position: relative;\r\n        display: inline-block;\r\n        width: 60px;\r\n        height: 34px;\r\n      }\r\n      .switch input { \r\n        opacity: 0;\r\n        width: 0;\r\n        height: 0;\r\n      }\r\n      \r\n      .slider {\r\n        position: absolute;\r\n        cursor: pointer;\r\n        top: 0;\r\n        left: 0;\r\n        right: 0;\r\n        bottom: 0;\r\n        background-color: black;\r\n        -webkit-transition: .4s;\r\n        transition: .4s;\r\n      }\r\n      \r\n      .slider:before {\r\n        position: absolute;\r\n        content: \"\";\r\n        height: 26px;\r\n        width: 26px;\r\n        left: 4px;\r\n        bottom: 4px;\r\n        background-color: #1abc9c;\r\n        -webkit-transition: .4s;\r\n        transition: .4s;\r\n      }    \r\n      input:checked + .slider {\r\n        background-color: white;\r\n      }\r\n      \r\n      input:focus + .slider {\r\n        box-shadow: 0 0 1px white;\r\n      }\r\n      \r\n      input:checked + .slider:before {\r\n        -webkit-transform: translateX(26px);\r\n        -ms-transform: translateX(26px);\r\n        transform: translateX(26px);\r\n      }\r\n      .slider.round {\r\n        border-radius: 34px;\r\n      }\r\n      \r\n      .slider.round:before {\r\n        border-radius: 50%;\r\n      }\r\n    }\r\n   \r\n}\r\n.item2 { grid-area: menu; }\r\n.item3 { grid-area: main;\r\n         display: grid;;\r\n         grid-template-columns: auto auto;\r\n         @media screen and (min-width: 320px) and (max-width: 480px) {\r\n          font-size: 14px;\r\n          grid-template-columns: auto;\r\n        }\r\n         width: 100%;\r\n    column-width: 19em;\r\n    -webkit-column-width: 19em;\r\n    column-gap: 1em;\r\n    -webkit-column-gap: 1em;\r\n         \r\n.item4 { grid-area: right; }\r\n.item5 { grid-area: footer; }\r\n\r\n.grid-container {\r\n  display: grid;\r\n  grid-template-areas:\r\n    'header header header header header header'\r\n    'menu menu menu menu menu menu'\r\n    'main main main main main main'\r\n    'footer footer footer footer footer footer';\r\n  grid-gap: 10px;\r\n  padding: 10px;\r\n}\r\n\r\n.header {\r\n  overflow: hidden;\r\n  background-color: #f1f1f1;\r\n  padding: 20px 10px;\r\n}\r\n\r\n.header a {\r\n  float: left;\r\n  color: black;\r\n  text-align: center;\r\n  padding: 12px;\r\n  text-decoration: none;\r\n  font-size: 18px; \r\n  line-height: 25px;\r\n  border-radius: 4px;\r\n}\r\n\r\n.header a.logo {\r\n  font-size: 25px;\r\n  font-weight: bold;\r\n}\r\n\r\n.header a:hover {\r\n  background-color: #ddd;\r\n  color: black;\r\n}\r\n\r\n.header a.active {\r\n  background-color: dodgerblue;\r\n  color: white;\r\n}\r\n\r\n.header-right {\r\n  float: right;\r\n}\r\n\r\n@media screen and (max-width: 500px) {\r\n  .header a {\r\n    float: none;\r\n    display: block;\r\n    text-align: left;\r\n  }\r\n  \r\n  .header-right {\r\n    float: none;\r\n  }\r\n}\r\n}",
                     "styleUrl": "./app.component.scss"
                 }
             ],
@@ -1523,7 +1523,7 @@
                         "type": "ThemeService"
                     }
                 ],
-                "line": 23,
+                "line": 21,
                 "jsdoctags": [
                     {
                         "name": "accountService",
@@ -1558,7 +1558,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"grid-container\">\n  <div class=\"item1\" *ngIf=\"!user\">\n    <div class=\"head-line\"> <h1>Movie Share</h1><span><img src=\"../assets/svg/movie-recorder-svgrepo-com.svg\"/></span></div>\n    <div class=\"top-nav\">\n      <div class=\"btns\">\n        <app-button [buttonConfig]=\"{text: 'Login'}\" routerLink=\"/account/login\"></app-button>\n        &nbsp;\n        <app-button [buttonConfig]=\"{text: 'Register'}\" routerLink=\"/account/register\"></app-button>\n      </div>\n      <label class=\"switch\">\n        <input  id=\"darkTheme\" type=\"checkbox\"  [formControl]=\"darkTheme\"/>\n        <span class=\"slider round\"></span>\n      </label>\n    </div>\n  </div>\n  <div class=\"item2\">\n    <router-outlet></router-outlet>\n  </div>\n  <section class=\"item3\" *ngIf=\"!user\">\n    <div *ngFor=\"let data of (selectData$ | async)\">\n      <sa-card title = \"{{data.title}}\" desc = \"{{data.description}}\" category = \"{{data.category}}\" year = \"{{data.year}}\"></sa-card>\n    </div>\n  </section>\n</div>"
+            "templateData": "<div class=\"grid-container\">\n  <div class=\"item1\" *ngIf=\"!user\">\n    <div class=\"head-line\"> <h1>Movie Share</h1><span><img src=\"../assets/svg/movie-recorder-svgrepo-com.svg\"/></span></div>\n    <div class=\"top-nav\">\n      <div class=\"btns\">\n        <app-button class=\"btns-text\" [buttonConfig]=\"{text: 'Login'}\" routerLink=\"/login\"></app-button>\n        &nbsp;\n        <app-button class=\"btns-text\" [buttonConfig]=\"{text: 'Register'}\" routerLink=\"/register\"></app-button>\n      </div>\n      <app-theme></app-theme>\n      <!-- <label class=\"switch\">\n        <input  id=\"darkTheme\" type=\"checkbox\"  [formControl]=\"darkTheme\"/>\n        <span class=\"slider round\"></span>\n      </label> -->\n    </div>\n  </div>\n  <div class=\"item2\">\n    <router-outlet></router-outlet>\n  </div>\n  <section class=\"item3\" *ngIf=\"!user\">\n    <div *ngFor=\"let data of (selectData$ | async)\">\n      <sa-card title = \"{{data.title}}\" desc = \"{{data.description}}\" category = \"{{data.category}}\" year = \"{{data.year}}\"></sa-card>\n    </div>\n  </section>\n</div>"
         },
         {
             "name": "ButtonComponent",
@@ -1643,72 +1643,7 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-aa16f6c4252f133a35e0fcb01c0b745a-1",
-            "file": "src/app/shared-components/btn-component/btn-component.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-button",
-            "styleUrls": [
-                "./btn-component.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./btn-component.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "buttonConfig",
-                    "line": 9,
-                    "type": "any"
-                }
-            ],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 12
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-button',\r\n  templateUrl: './btn-component.component.html',\r\n  styleUrls: ['./btn-component.component.scss']\r\n})\r\nexport class ButtonComponent implements OnInit {\r\n  @Input() buttonConfig: any;\r\n  constructor() {}\r\n\r\n  ngOnInit() {}\r\n}",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": ":host {\r\n    color: var(--text-color);\r\n  }\r\n.text-btn{\r\n    background-color: #1abc9c;\r\n    color: white;\r\n    margin: 8px 0;\r\n    border: none;\r\n    cursor: pointer;\r\n    width: 100%;\r\n    font-size: 18px;\r\n}\r\n\r\n.img-btn{\r\n      position: 'relative';\r\n      width: '100px';\r\n      height: '100px';\r\n      cursor: pointer;\r\n}\r\n\r\n//   .storybook-button--secondary {\r\n//       color: #333;\r\n//       background-color: transparent;\r\n//       box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\r\n//     }\r\n//     .storybook-button--small {\r\n//       font-size: 12px;\r\n//       padding: 10px 16px;\r\n//     }\r\n//     .storybook-button--medium {\r\n//       font-size: 14px;\r\n//       padding: 11px 20px;\r\n//     }\r\n//     .storybook-button--large {\r\n//       font-size: 16px;\r\n//       padding: 12px 24px;\r\n//     }\r\n  ",
-                    "styleUrl": "./btn-component.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [],
-                "line": 9
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "ButtonComponent-1",
-            "templateData": "<ng-container *ngTemplateOutlet=\"buttonConfig['text'] ? text : image\">\r\n</ng-container>\r\n<ng-template #text>\r\n    <button type=\"button\" class=\"text-btn\">\r\n        {{ buttonConfig.text}}\r\n    </button>\r\n</ng-template>\r\n<ng-template #image class=\"img-btn\">\r\n    <img alt=\"image button\" [src]=\"buttonConfig.src\">\r\n</ng-template>"
-        },
-        {
-            "name": "ButtonComponent",
-            "id": "component-ButtonComponent-c5e3aa282df5e72f3636ef6573e1261f-2",
+            "id": "component-ButtonComponent-c5e3aa282df5e72f3636ef6573e1261f-1",
             "file": "src/app/shared/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1767,112 +1702,50 @@
                 "OnInit"
             ],
             "isDuplicate": true,
-            "duplicateId": 2,
-            "duplicateName": "ButtonComponent-2",
+            "duplicateId": 1,
+            "duplicateName": "ButtonComponent-1",
             "templateData": "<ng-container *ngTemplateOutlet=\"buttonConfig['text'] ? text : image\">\r\n</ng-container>\r\n<ng-template #text>\r\n    <button type=\"button\" class=\"text-btn\">\r\n        {{ buttonConfig.text}}\r\n    </button>\r\n</ng-template>\r\n<ng-template #image class=\"img-btn\">\r\n    <img alt=\"image button\" [src]=\"buttonConfig.src\">\r\n</ng-template>"
         },
         {
-            "name": "CardComponent",
-            "id": "component-CardComponent-bafb7631b1468b7fa627a2bfdee9ee97",
-            "file": "src/app/shared-components/card/card.component.ts",
+            "name": "ButtonComponent",
+            "id": "component-ButtonComponent-00fb13d7a1847703f8749cc275b4ab44-2",
+            "file": "src/app/shared-components/btn-component/btn-component.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "sa-card",
+            "selector": "app-button",
             "styleUrls": [
-                "./card.component.scss"
+                "./btn-component.component.scss"
             ],
             "styles": [],
             "templateUrl": [
-                "./card.component.html"
+                "./btn-component.component.html"
             ],
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "category",
-                    "line": 11,
-                    "type": "any"
-                },
-                {
-                    "name": "desc",
-                    "line": 10,
-                    "type": "any"
-                },
-                {
-                    "name": "id",
-                    "line": 13,
-                    "type": "any"
-                },
-                {
-                    "name": "isLoggedIn",
-                    "line": 14,
-                    "type": "boolean"
-                },
-                {
-                    "name": "title",
+                    "name": "buttonConfig",
+                    "defaultValue": "null",
                     "line": 9,
                     "type": "any"
-                },
-                {
-                    "name": "year",
-                    "line": 12,
-                    "type": "any"
                 }
             ],
-            "outputsClass": [
-                {
-                    "name": "change",
-                    "defaultValue": "new EventEmitter<any>()",
-                    "line": 16,
-                    "type": "EventEmitter<any>"
-                },
-                {
-                    "name": "delete",
-                    "defaultValue": "new EventEmitter<any>()",
-                    "line": 19,
-                    "type": "EventEmitter<any>"
-                }
-            ],
+            "outputsClass": [],
             "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 22
-                },
-                {
-                    "name": "remove",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 30
-                },
-                {
-                    "name": "update",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 26
-                }
-            ],
+            "methodsClass": [],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'sa-card',\r\n    templateUrl: './card.component.html',\r\n    styleUrls: ['./card.component.scss']\r\n})\r\nexport class CardComponent implements OnInit {\r\n    @Input() title: any;\r\n    @Input() desc: any;\r\n    @Input() category: any;\r\n    @Input() year: any;\r\n    @Input() id: any;\r\n    @Input() isLoggedIn: boolean;\r\n    @Output()\r\n    change: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n    @Output()\r\n    delete: EventEmitter<any> = new EventEmitter<any>();\r\n    constructor() { }\r\n\r\n    ngOnInit() {\r\n        console.log(this.title, this.desc, this.category);\r\n\r\n    }\r\n    update() {\r\n        this.change.emit(this.id);\r\n    }\r\n\r\n    remove(){\r\n        this.delete.emit(this.id)\r\n    }\r\n}",
+            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-button',\r\n  templateUrl: './btn-component.component.html',\r\n  styleUrls: ['./btn-component.component.scss']\r\n})\r\nexport class ButtonComponent {\r\n  @Input() buttonConfig: any = null;\r\n  constructor() { }\r\n}",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".card {\r\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\r\n    transition: 0.3s;\r\n    width: 100%;\r\n    margin-top: 1rem;\r\n  }\r\n  \r\n  .card:hover {\r\n    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);\r\n  }\r\n  \r\n  .container {\r\n    padding: 2px 16px;\r\n    display: grid;\r\n    grid-template-columns: auto auto auto auto;\r\n    img{\r\n        margin-top: 1.5rem;\r\n        @media screen and (min-width: 320px) and (max-width: 375px)  {\r\n          width: 30px;\r\n          height: 30px;\r\n        }\r\n    }\r\n     .btn-remove{\r\n        margin-top: 3.5rem;\r\n    }\r\n    .btn-update{\r\n        margin-top: 3.5rem;\r\n    }\r\n    .data{\r\n      // grid-area: data;\r\n      text-align: start;\r\n      width: 700px;\r\n      @media screen and (min-width: 320px) and (max-width: 375px)  {\r\n        width: 105px;\r\n      }\r\n      @media screen and (min-width: 375px) and (max-width: 425px)  {\r\n        width: 105px;\r\n      }\r\n      h2{\r\n        word-wrap: break-word;\r\n      }\r\n      p{\r\n        word-wrap: break-word;\r\n      }\r\n    }\r\n  }",
-                    "styleUrl": "./card.component.scss"
+                    "data": ":host {\r\n    color: var(--text-color);\r\n  }\r\n.text-btn{\r\n    // background-color: #1abc9c;\r\n    color: white;\r\n    // margin: 8px 0;\r\n    // border: none;\r\n    // cursor: pointer;\r\n    // width: 100%;\r\n    // font-size: 18px;\r\n    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\r\n    font-weight: 700;\r\n    border: 0;\r\n    border-radius: 3em;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    line-height: 1;\r\n    background-color: #1abc9c;\r\n    font-size: 20px;\r\n    padding: 8px  0px;\r\n}\r\n\r\n.img-btn{\r\n      position: 'relative';\r\n      width: '100px';\r\n      height: '100px';\r\n      cursor: pointer;\r\n}\r\n\r\n",
+                    "styleUrl": "./btn-component.component.scss"
                 }
             ],
             "stylesData": "",
@@ -1880,16 +1753,16 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 19
+                "line": 9
             },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"card\">\r\n    <div class=\"container\">\r\n        <img src=\"../../../assets/svg/popcorn.svg\">\r\n        <div class=\"data\">\r\n            <h2><b>{{title}}</b></h2>\r\n            <p>{{desc}}</p>\r\n            <p>Category: <span> &nbsp;<b>{{category}}</b></span></p>\r\n            <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>\r\n        </div>\r\n        <app-button class=\"btn-update\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/update.svg'}\" (click) = \"update()\"></app-button>\r\n        <app-button class=\"btn-remove\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/delete.svg'}\" (click) = \"remove()\"></app-button>\r\n    </div>\r\n</div>"
+            "isDuplicate": true,
+            "duplicateId": 2,
+            "duplicateName": "ButtonComponent-2",
+            "templateData": "<!-- <ng-container *ngTemplateOutlet=\"buttonConfig['text'] ? text : image\">\r\n</ng-container>\r\n<ng-template #text>\r\n    <button type=\"button\" class=\"text-btn\">\r\n        {{ buttonConfig.text}}\r\n    </button>\r\n</ng-template>\r\n<ng-template #image class=\"img-btn\">\r\n    <img alt=\"image button\" [src]=\"buttonConfig.src\">\r\n</ng-template> -->\r\n\r\n<ng-container *ngIf=\"buttonConfig?.text then text else image\">\r\n</ng-container>\r\n<ng-template #text>\r\n <button type=\"button\" class=\"text-btn\">\r\n {{ buttonConfig?.text}}\r\n </button>\r\n</ng-template>\r\n<ng-template #image class=\"img-btn\">\r\n <img alt=\"image button\" [src]=\"buttonConfig?.src\">\r\n</ng-template>"
         },
         {
             "name": "CardComponent",
-            "id": "component-CardComponent-bafb7631b1468b7fa627a2bfdee9ee97-1",
+            "id": "component-CardComponent-bafb7631b1468b7fa627a2bfdee9ee97",
             "file": "src/app/shared/card/card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2001,14 +1874,130 @@
             "implements": [
                 "OnInit"
             ],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "CardComponent-1",
             "templateData": "<div class=\"card\">\r\n    <div class=\"container\">\r\n        <img src=\"../../../assets/svg/movie.svg\">\r\n        <div class=\"data\">\r\n            <h2><b>{{title}}</b></h2>\r\n            <p>{{desc}}</p>\r\n            <p>Category: <span> &nbsp;<b>{{category}}</b></span></p>\r\n            <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>\r\n        </div>\r\n        <app-button class=\"btn-update\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/update.svg'}\" (click) = \"update()\"></app-button>\r\n        <app-button class=\"btn-remove\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/delete.svg'}\" (click) = \"remove()\"></app-button>\r\n    </div>\r\n</div>"
         },
         {
+            "name": "CardComponent",
+            "id": "component-CardComponent-45c383fa98f07ed27495262b8237f1cf-1",
+            "file": "src/app/shared-components/card/card.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "sa-card",
+            "styleUrls": [
+                "./card.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./card.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "category",
+                    "line": 11,
+                    "type": "any"
+                },
+                {
+                    "name": "desc",
+                    "line": 10,
+                    "type": "any"
+                },
+                {
+                    "name": "id",
+                    "line": 13,
+                    "type": "any"
+                },
+                {
+                    "name": "isLoggedIn",
+                    "line": 14,
+                    "type": "boolean"
+                },
+                {
+                    "name": "title",
+                    "line": 9,
+                    "type": "any"
+                },
+                {
+                    "name": "year",
+                    "line": 12,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "change",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "line": 16,
+                    "type": "EventEmitter<any>"
+                },
+                {
+                    "name": "delete",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "line": 19,
+                    "type": "EventEmitter<any>"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 22
+                },
+                {
+                    "name": "remove",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 28
+                },
+                {
+                    "name": "update",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 24
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'sa-card',\r\n    templateUrl: './card.component.html',\r\n    styleUrls: ['./card.component.scss']\r\n})\r\nexport class CardComponent implements OnInit {\r\n    @Input() title: any;\r\n    @Input() desc: any;\r\n    @Input() category: any;\r\n    @Input() year: any;\r\n    @Input() id: any;\r\n    @Input() isLoggedIn: boolean;\r\n    @Output()\r\n    change: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n    @Output()\r\n    delete: EventEmitter<any> = new EventEmitter<any>();\r\n    constructor() { }\r\n\r\n    ngOnInit() {\r\n    }\r\n    update() {\r\n        this.change.emit(this.id);\r\n    }\r\n\r\n    remove(){\r\n        this.delete.emit(this.id)\r\n    }\r\n}",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".card {\r\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\r\n    transition: 0.3s;\r\n    width: 100%;\r\n    margin-top: 1rem;\r\n  }\r\n  \r\n  .card:hover {\r\n    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);\r\n  }\r\n  \r\n  .container {\r\n    padding: 2px 16px;\r\n    display: grid;\r\n    grid-template-columns: auto auto auto auto;\r\n    img{\r\n        margin-top: 1.5rem;\r\n        @media screen and (min-width: 320px) and (max-width: 375px)  {\r\n          width: 30px;\r\n          height: 30px;\r\n        }\r\n    }\r\n     .btn-remove{\r\n        margin-top: 3.5rem;\r\n        cursor: pointer;\r\n    }\r\n    .btn-update{\r\n        margin-top: 3.5rem;\r\n        cursor: pointer;\r\n    }\r\n    .data{\r\n      text-align: start;\r\n      width: 450px;\r\n      h2{\r\n        @media screen and (min-width: 320px) and (max-width: 375px)  {\r\n          font-size: 16px;\r\n        }\r\n      }\r\n      @media screen and (min-width: 320px) and (max-width: 375px)  {\r\n        width: 105px;\r\n        h2{\r\n          font-size: 16px;\r\n        }\r\n        p{\r\n          font-size: 12px;\r\n        }\r\n      }\r\n      @media screen and (min-width: 375px) and (max-width: 425px)  {\r\n        width: 105px;\r\n        h2{\r\n          font-size: 16px;\r\n        }\r\n        p{\r\n          font-size: 12px;\r\n        }\r\n      }\r\n      @media screen and (min-width: 425px) and (max-width: 768px)  {\r\n        width: 150px;\r\n        h2{\r\n          font-size: 16px;\r\n        }\r\n        p{\r\n          font-size: 12px;\r\n        }\r\n      }\r\n\r\n      @media screen and (min-width: 768px) and (max-width: 1024px)  {\r\n        width: 243px;\r\n        h2{\r\n          font-size: 16px;\r\n        }\r\n        p{\r\n          font-size: 12px;\r\n        }\r\n      }\r\n      h2{\r\n        word-wrap: break-word;\r\n      }\r\n      p{\r\n        word-wrap: break-word;\r\n      }\r\n    }\r\n  }",
+                    "styleUrl": "./card.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 19
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "CardComponent-1",
+            "templateData": "<div class=\"card\">\r\n    <div class=\"container\">\r\n        <img src=\"../../../assets/svg/popcorn.svg\">\r\n        <div class=\"data\">\r\n            <h2><b>{{title}}</b></h2>\r\n            <p>{{desc}}</p>\r\n            <p>Category: <span> &nbsp;<b>{{category}}</b></span></p>\r\n            <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>\r\n        </div>\r\n        <app-button class=\"btn-update\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/update.svg'}\" (click) = \"update()\"></app-button>\r\n        <app-button class=\"btn-remove\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/delete.svg'}\" (click) = \"remove()\"></app-button>\r\n    </div>\r\n</div>"
+        },
+        {
             "name": "HomeComponent",
-            "id": "component-HomeComponent-cf74d85f8923ecfe7d74d4a4469a26e6",
+            "id": "component-HomeComponent-6211abac6fd8b1c466ef5e99bef552c1",
             "file": "src/app/components/home/home.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2131,7 +2120,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 66
+                    "line": 64
                 },
                 {
                     "name": "ngOnInit",
@@ -2139,7 +2128,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 51
+                    "line": 49
                 },
                 {
                     "name": "onCancel",
@@ -2147,7 +2136,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 88
+                    "line": 83
                 },
                 {
                     "name": "OnClick",
@@ -2155,7 +2144,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 69
+                    "line": 67
                 },
                 {
                     "name": "onDelete",
@@ -2168,7 +2157,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 81,
+                    "line": 78,
                     "jsdoctags": [
                         {
                             "name": "id",
@@ -2185,7 +2174,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 114
+                    "line": 109
                 },
                 {
                     "name": "onUpdate",
@@ -2198,7 +2187,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 74,
+                    "line": 72,
                     "jsdoctags": [
                         {
                             "name": "id",
@@ -2215,7 +2204,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 93
+                    "line": 88
                 }
             ],
             "hostBindings": [],
@@ -2223,11 +2212,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit, AfterViewInit } from '@angular/core';\nimport { User } from 'src/app/models/user';\nimport { AccountService } from 'src/app/services/account.service';\nimport { Store } from '@ngrx/store';\nimport { AppState } from 'src/app/app.model';\nimport { Observable } from 'rxjs';\nimport { selectIsLoggedIn, selectData } from 'src/app/store/app.selectors';\nimport { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';\nimport { IsLoggedIn, SaveSharedLinks, DeleteLink, FetchUserData, UpdateLink } from 'src/app/store/app.actions';\nimport * as uuid from 'uuid';\nimport { ThemeService } from 'src/app/services/theme.service';\n\n@Component({\n  selector: 'app-home',\n  templateUrl: './home.component.html',\n  styleUrls: ['./home.component.scss']\n})\nexport class HomeComponent implements OnInit {\n  form: FormGroup;\n  updateForm: FormGroup;\n  user: boolean;\n  add: boolean = false;\n  darkTheme = new FormControl(false);\n  submitted = false;\n  isUpdate = false;\n  public id = null;\n  public selectIsLoggedIn$: Observable<boolean> = this.store.select(selectIsLoggedIn);\n  public selectData$: Observable<any> = this.store.select(selectData);\n  constructor(\n    private accountService: AccountService,\n    public store: Store<AppState>,\n    private themeService: ThemeService,\n    private formBuilder: FormBuilder) {\n    this.store.dispatch(new FetchUserData());\n    this.store.dispatch(new IsLoggedIn(true));\n    this.selectIsLoggedIn$.subscribe(val => {\n     console.log(val);\n     \n      this.user = val\n    })\n\n    this.darkTheme.valueChanges.subscribe(value => {\n      if (value) {\n        this.themeService.toggleDark();\n      } else {\n        this.themeService.toggleLight();\n      }\n    });\n  }\n\n  ngOnInit(): void {\n    this.form = this.formBuilder.group({\n      title: ['', Validators.required],\n      desc: ['', Validators.required],\n      category: ['', Validators.required],\n      releaseDate: ['', Validators.required]\n    });\n\n    this.updateForm = this.formBuilder.group({\n      updateTitle: ['', Validators.required],\n      updateDesc: ['', Validators.required],\n      updateCategory: ['', Validators.required],\n      updateYear: ['', Validators.required]\n    });\n  }\n  logout() {\n    this.accountService.logout();\n  }\n  OnClick() {\n    this.add = true\n    this.isUpdate = false\n  }\n\n  onUpdate(id) {\n    console.log(id);\n    \n    this.id = id\n    this.isUpdate = true\n    this.add = false\n  }\n  onDelete(id) {\n    console.log(id);\n    \n    this.store.dispatch(new DeleteLink(id));\n    this.store.dispatch(new FetchUserData());\n  }\n\n  onCancel(){\n    this.add = false;\n    this.isUpdate = false\n  }\n\n  onUpdateLink() {\n    this.submitted = true;\n    if (this.updateForm.invalid) {\n      return;\n    }\n    const requestBody = {\n      id: this.id,\n      title: this.updateForm.value.title,\n      description: this.updateForm.value.desc,\n      year: this.updateForm.value.updateYear\n    }\n    this.store.dispatch(new UpdateLink(this.id, requestBody))\n    this.store.dispatch(new FetchUserData())\n    console.log(this.updateForm.value, this.id);\n  }\n\n\n  get f() { return this.form.controls; }\n\n  get fc() { return this.updateForm.controls; }\n\n  onSubmit() {\n    this.submitted = true;\n    this.id = null\n    if (this.form.invalid) {\n      return;\n    }\n    this.add = false\n    const myId = uuid.v4();\n    const requestBody = {\n      id: myId,\n      title: this.form.value.title,\n      description: this.form.value.desc,\n      year: this.form.value.releaseDate\n    }\n    this.store.dispatch(new SaveSharedLinks(requestBody))\n  }\n\n}\n",
+            "sourceCode": "import { Component, OnInit, AfterViewInit } from '@angular/core';\nimport { User } from 'src/app/models/user';\nimport { AccountService } from 'src/app/services/account.service';\nimport { Store } from '@ngrx/store';\nimport { AppState } from 'src/app/app.model';\nimport { Observable } from 'rxjs';\nimport { selectIsLoggedIn, selectData } from 'src/app/store/app.selectors';\nimport { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';\nimport { IsLoggedIn, SaveSharedLinks, DeleteLink, FetchUserData, UpdateLink } from 'src/app/store/app.actions';\nimport * as uuid from 'uuid';\nimport { ThemeService } from 'src/app/services/theme.service';\n\n@Component({\n  selector: 'app-home',\n  templateUrl: './home.component.html',\n  styleUrls: ['./home.component.scss']\n})\nexport class HomeComponent implements OnInit {\n  form: FormGroup;\n  updateForm: FormGroup;\n  user: boolean;\n  add: boolean = false;\n  darkTheme = new FormControl(false);\n  submitted = false;\n  isUpdate = false;\n  public id = null;\n  public selectIsLoggedIn$: Observable<boolean> = this.store.select(selectIsLoggedIn);\n  public selectData$: Observable<any> = this.store.select(selectData);\n  constructor(\n    private accountService: AccountService,\n    public store: Store<AppState>,\n    private themeService: ThemeService,\n    private formBuilder: FormBuilder) {\n    this.store.dispatch(new FetchUserData());\n    this.store.dispatch(new IsLoggedIn(true));\n    this.selectIsLoggedIn$.subscribe(val => {\n      this.user = val\n    })\n\n    this.darkTheme.valueChanges.subscribe(value => {\n      if (value) {\n        this.themeService.toggleDark();\n      } else {\n        this.themeService.toggleLight();\n      }\n    });\n  }\n\n  ngOnInit(): void {\n    this.form = this.formBuilder.group({\n      title: ['', Validators.required],\n      desc: ['', Validators.required],\n      category: ['', Validators.required],\n      releaseDate: ['', Validators.required]\n    });\n\n    this.updateForm = this.formBuilder.group({\n      updateTitle: ['', Validators.required],\n      updateDesc: ['', Validators.required],\n      updateCategory: ['', Validators.required],\n      updateYear: ['', Validators.required]\n    });\n  }\n  logout() {\n    this.accountService.logout();\n  }\n  OnClick() {\n    this.add = true\n    this.isUpdate = false\n  }\n\n  onUpdate(id) {\n    this.id = id\n    this.isUpdate = true\n    this.add = false\n    window.scrollTo(0, 0);\n  }\n  onDelete(id) {\n    this.store.dispatch(new DeleteLink(id));\n    this.store.dispatch(new FetchUserData());\n  }\n\n  onCancel() {\n    this.add = false;\n    this.isUpdate = false\n  }\n\n  onUpdateLink() {\n    this.submitted = true;\n    if (this.updateForm.invalid) {\n      return;\n    }\n    const requestBody = {\n      id: this.id,\n      title: this.updateForm.value.updateTitle,\n      description: this.updateForm.value.updateDesc,\n      year: this.updateForm.value.updateYear,\n      category: this.updateForm.value.updateCategory\n    }\n    this.store.dispatch(new UpdateLink(this.id, requestBody))\n    this.store.dispatch(new FetchUserData())\n    this.isUpdate = false\n  }\n\n  get f() { return this.form.controls; }\n\n  get fc() { return this.updateForm.controls; }\n\n  onSubmit() {\n    this.submitted = true;\n    this.id = null\n    if (this.form.invalid) {\n      return;\n    }\n    this.add = false\n    const myId = uuid.v4();\n    const requestBody = {\n      id: myId,\n      title: this.form.value.title,\n      description: this.form.value.desc,\n      category: this.form.value.category,\n      year: this.form.value.releaseDate\n    }\n    this.store.dispatch(new SaveSharedLinks(requestBody))\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ":host {\r\n  background-color: var(--primary-color);\r\n  color: var(--text-color);\r\n}\r\n.item1 { grid-area: header;\r\n  display: flex;\r\n  justify-content: space-between;\r\n    background-color: #1abc9c; \r\n    height:80px;\r\n    .head-line{\r\n      display: flex;\r\n       justify-content: space-between;\r\n       width: 17rem;\r\n      h1{\r\n        \r\n        @media screen and (min-width: 320px) and (max-width: 480px) {\r\n          font-size: 14px;\r\n          margin-top: 1.5rem;\r\n\r\n        }\r\n      }\r\n      img{\r\n        margin-top: 1rem;\r\n      };\r\n    }\r\n    .btns{\r\n      display: flex;\r\n      flex-flow: row;\r\n    margin: 1rem;\r\n    .switch {\r\n      position: relative;\r\n      display: inline-block;\r\n      width: 60px;\r\n      height: 34px;\r\n      margin-top: 9px;\r\n    }\r\n    .switch input { \r\n      opacity: 0;\r\n      width: 0;\r\n      height: 0;\r\n    }\r\n    \r\n    .slider {\r\n      position: absolute;\r\n      cursor: pointer;\r\n      top: 0;\r\n      left: 0;\r\n      right: 0;\r\n      bottom: 0;\r\n      background-color: black;\r\n      -webkit-transition: .4s;\r\n      transition: .4s;\r\n    }\r\n    \r\n    .slider:before {\r\n      position: absolute;\r\n      content: \"\";\r\n      height: 26px;\r\n      width: 26px;\r\n      left: 4px;\r\n      bottom: 4px;\r\n      background-color: #1abc9c;\r\n      -webkit-transition: .4s;\r\n      transition: .4s;\r\n    }    \r\n    input:checked + .slider {\r\n      background-color: white;\r\n    }\r\n    \r\n    input:focus + .slider {\r\n      box-shadow: 0 0 1px white;\r\n    }\r\n    \r\n    input:checked + .slider:before {\r\n      -webkit-transform: translateX(26px);\r\n      -ms-transform: translateX(26px);\r\n      transform: translateX(26px);\r\n    }\r\n    .slider.round {\r\n      border-radius: 34px;\r\n    }\r\n    \r\n    .slider.round:before {\r\n      border-radius: 50%;\r\n    }\r\n      .btn-logout{\r\n        margin: 1rem 1rem;\r\n      }\r\n      .btn-add{\r\n        margin: 0.5rem 1rem;\r\n      }\r\n    }\r\n    \r\n  }\r\n\r\n  body {font-family: Arial, Helvetica, sans-serif;}\r\n  form {border: 3px solid #f1f1f1; \r\n  }\r\n.item2 { \r\n\r\n  input[type=text], input[type=password] {\r\n    width: 100%;\r\n    padding: 12px 20px;\r\n    margin: 8px 0;\r\n    display: inline-block;\r\n    border: 1px solid #ccc;\r\n    box-sizing: border-box;\r\n  }\r\n  \r\n  button {\r\n    background-color: #1abc9c;\r\n    color: white;\r\n    padding: 14px 20px;\r\n    margin: 8px 0;\r\n    border: none;\r\n    cursor: pointer;\r\n    width: 100%;\r\n  }\r\n  \r\n  .btn-cancel{\r\n      background-color: lightsalmon;\r\n      color: white;\r\n      padding: 14px 20px;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      width: 100%;\r\n  }\r\n  \r\n  .btn-reg:hover{\r\n      opacity: 0.8;\r\n  }\r\n  \r\n  button:hover {\r\n    opacity: 0.8;\r\n  }\r\n  \r\n  .cancelbtn {\r\n    width: auto;\r\n    padding: 10px 18px;\r\n    background-color: #f44336;\r\n  }\r\n  \r\n  .imgcontainer {\r\n    text-align: center;\r\n    margin: 24px 0 12px 0;\r\n  }\r\n  \r\n  img.avatar {\r\n    width: 40%;\r\n    border-radius: 50%;\r\n  }\r\n  \r\n  .container {\r\n    padding: 16px;\r\n  }\r\n  \r\n  span.psw {\r\n    float: right;\r\n    padding-top: 16px;\r\n  }\r\n  }\r\n.item3 { grid-area: main;\r\n         display: grid;  \r\n         width: 100%;\r\n    column-width: 19em;\r\n    -webkit-column-width: 19em;\r\n    column-gap: 1em;\r\n    -webkit-column-gap: 1em;}\r\n.item4 { grid-area: right; }\r\n.item5 { grid-area: footer; }\r\n\r\n.grid-container {\r\n  display: grid;\r\n  grid-template-areas:\r\n  'header header header header header header'\r\n  'menu menu menu menu menu menu'\r\n  'main main main main main main'\r\n  'footer footer footer footer footer footer';\r\n  grid-gap: 10px;\r\n//   background-color: #2196F3;\r\n  padding: 10px;\r\n}\r\n\r\n.grid-container > div {\r\n//   background-color: rgba(255, 255, 255, 0.8);\r\n  text-align: center;\r\n  padding: 20px 0;\r\n  font-size: 30px;\r\n}",
+                    "data": ":host {\r\n  background-color: var(--primary-color);\r\n  color: var(--text-color);\r\n}\r\n.item1 {\r\n  grid-area: header;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  background-color: #1abc9c;\r\n  height: 80px;\r\n  .head-line {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    width: 17rem;\r\n    h1 {\r\n      @media screen and (min-width: 320px) and (max-width: 480px) {\r\n        font-size: 14px;\r\n        margin-top: 1.5rem;\r\n      }\r\n    }\r\n    img {\r\n      margin-top: 1rem;\r\n    }\r\n  }\r\n  .btns {\r\n    display: flex;\r\n    flex-flow: row;\r\n    margin: 1rem;\r\n    .btn-theme {\r\n      margin-top: .5rem;\r\n    }\r\n    .btn-logout {\r\n      margin: 1rem 1rem;\r\n      cursor: pointer;\r\n    }\r\n    .btn-add {\r\n      margin: 0.5rem 1rem;\r\n      cursor: pointer;\r\n    }\r\n  }\r\n}\r\n\r\nbody {\r\n  font-family: Arial, Helvetica, sans-serif;\r\n}\r\nform {\r\n  border: 3px solid #f1f1f1;\r\n}\r\n.item2 {\r\n  input[type=\"text\"],\r\n  input[type=\"password\"] {\r\n    width: 100%;\r\n    padding: 12px 20px;\r\n    margin: 8px 0;\r\n    display: inline-block;\r\n    border: 1px solid #ccc;\r\n    box-sizing: border-box;\r\n  }\r\n\r\n  button {\r\n    background-color: #1abc9c;\r\n    color: white;\r\n    padding: 14px 20px;\r\n    margin: 8px 0;\r\n    border: none;\r\n    cursor: pointer;\r\n    width: 100%;\r\n  }\r\n\r\n  .btn-cancel {\r\n    background-color: lightsalmon;\r\n    color: white;\r\n    padding: 14px 20px;\r\n    margin: 8px 0;\r\n    border: none;\r\n    cursor: pointer;\r\n    width: 100%;\r\n  }\r\n\r\n  .btn-reg:hover {\r\n    opacity: 0.8;\r\n  }\r\n\r\n  button:hover {\r\n    opacity: 0.8;\r\n  }\r\n\r\n  .cancelbtn {\r\n    width: auto;\r\n    padding: 10px 18px;\r\n    background-color: #f44336;\r\n  }\r\n\r\n  .imgcontainer {\r\n    text-align: center;\r\n    margin: 24px 0 12px 0;\r\n  }\r\n\r\n  img.avatar {\r\n    width: 40%;\r\n    border-radius: 50%;\r\n  }\r\n\r\n  .container {\r\n    padding: 16px;\r\n  }\r\n\r\n  span.psw {\r\n    float: right;\r\n    padding-top: 16px;\r\n  }\r\n}\r\n.item3 {\r\n  grid-area: main;\r\n  display: grid;\r\n  width: 100%;\r\n  column-width: 19em;\r\n  -webkit-column-width: 19em;\r\n  column-gap: 1em;\r\n  -webkit-column-gap: 1em;\r\n}\r\n.item4 {\r\n  grid-area: right;\r\n}\r\n.item5 {\r\n  grid-area: footer;\r\n}\r\n\r\n.grid-container {\r\n  display: grid;\r\n  grid-template-areas:\r\n    \"header header header header header header\"\r\n    \"menu menu menu menu menu menu\"\r\n    \"main main main main main main\"\r\n    \"footer footer footer footer footer footer\";\r\n  grid-gap: 10px;\r\n  //   background-color: #2196F3;\r\n  padding: 10px;\r\n}\r\n\r\n.grid-container > div {\r\n  //   background-color: rgba(255, 255, 255, 0.8);\r\n  text-align: center;\r\n  padding: 20px 0;\r\n  font-size: 30px;\r\n}\r\n",
                     "styleUrl": "./home.component.scss"
                 }
             ],
@@ -2295,7 +2284,7 @@
                         "name": "f",
                         "type": "",
                         "returnType": "",
-                        "line": 110
+                        "line": 105
                     }
                 },
                 "fc": {
@@ -2304,85 +2293,16 @@
                         "name": "fc",
                         "type": "",
                         "returnType": "",
-                        "line": 112
+                        "line": 107
                     }
                 }
             },
-            "templateData": "<div *ngIf=\"user\">\n    <div class=\"item1\">\n        <div class=\"head-line\"> <h1>Movie Share</h1><span><img src=\"../assets/svg/movie-recorder-svgrepo-com.svg\"/></span></div>\n        <div class=\"btns\">\n            <label class=\"switch\">\n                <input  id=\"darkTheme\" type=\"checkbox\"  [formControl]=\"darkTheme\"/>\n                <span class=\"slider round\"></span>\n              </label>\n            <app-button class=\"btn-add\" [buttonConfig]=\"{text: 'Add Movies'}\" (click)=\"OnClick()\"></app-button>\n          <app-button class=\"btn-logout\" [buttonConfig]=\"{src: '../../../assets/svg/logout.svg'}\" (click)=\"logout()\"></app-button>\n        </div>\n        \n    </div>\n    <div *ngIf=\"add\" class=\"item2\">\n        <form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n            <div class=\"container\">\n                <label>Title</label>\n                <input type=\"text\" formControlName=\"title\" />\n                <div *ngIf=\"submitted && f.title.errors\">\n                    <div *ngIf=\"f.title.errors.required\">Title is required</div>\n                </div>\n                <label>Description</label>\n                <input type=\"text\" formControlName=\"desc\" />\n                <div *ngIf=\"submitted && f.desc.errors\">\n                    <div *ngIf=\"f.desc.errors.required\">Description is required</div>\n                </div>\n                <label>Category</label>\n                <input type=\"text\" formControlName=\"category\" />\n                <div *ngIf=\"submitted && f.category.errors\">\n                    <div *ngIf=\"f.category.errors.required\">Category is required</div>\n                </div>\n                <label>Release Date</label>&nbsp;&nbsp;\n                <input type=\"date\" formControlName=\"releaseDate\" />\n                <div *ngIf=\"submitted && f.releaseDate.errors\">\n                    <div *ngIf=\"f.releaseDate.errors.required\">Release Date is required</div>\n                </div>\n                <button>\n                    Add\n                </button>\n                <button class=\"btn-cancel\" (click) = \"onCancel()\">Cancel</button>\n            </div>\n               \n        </form>\n    </div>\n    <div *ngIf=\"isUpdate\" class=\"item2\">\n        <form [formGroup]=\"updateForm\" (ngSubmit)=\"onUpdateLink()\" >\n            <div class=\"container\">\n                <label>Title</label>\n                <input type=\"text\" formControlName=\"updateTitle\" />\n                <div *ngIf=\"submitted && fc.updateTitle.errors\">\n                    <div *ngIf=\"fc.updateTitle.errors.required\">Title is required</div>\n                </div>\n                <label>Description</label>\n                <input type=\"text\" formControlName=\"updateDesc\" />\n                <div *ngIf=\"submitted && fc.updateDesc.errors\">\n                    <div *ngIf=\"fc.updateDesc.errors.required\">Description is required</div>\n                </div>\n                <label>Category</label>\n                <input type=\"text\" formControlName=\"updateCategory\" />\n                <div *ngIf=\"submitted && fc.updateCategory.errors\">\n                    <div *ngIf=\"fc.updateCategory.errors.required\">Category is required</div>\n                </div>\n                <label>Release Date</label>&nbsp;&nbsp;\n                <input type=\"date\" formControlName=\"updateYear\" />\n                <div *ngIf=\"submitted && fc.updateYear.errors\">\n                    <div *ngIf=\"fc.updateYear.errors.required\">Release Date is required</div>\n                </div>\n                <button>\n                    Update\n                </button>\n                <button class=\"btn-cancel\" (click) = \"onCancel()\">Cancel</button>\n            </div>\n        </form>\n    </div>\n    <section>\n        <div *ngFor=\"let data of (selectData$ | async)\">\n            <div>\n                <div>\n                    <sa-card title=\"{{data.title}}\" desc=\"{{data.description}}\" category=\"{{data.category}}\"\n                        year=\"{{data.year}}\" isLoggedIn = \"user\" id = \"{{data.id}}\" (change) = \"onUpdate($event)\" (delete) = \"onDelete($event)\">\n                    </sa-card>\n                </div>\n            </div>\n        </div>\n    </section>\n</div>"
-        },
-        {
-            "name": "LayoutComponent",
-            "id": "component-LayoutComponent-874a86c143b22480a3a7f0fa59720d5c",
-            "file": "src/app/account/layout/layout.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-layout",
-            "styleUrls": [
-                "./layout.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./layout.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { Router } from '@angular/router';\nimport { AccountService } from 'src/app/services/account.service';\n\n@Component({\n  selector: 'app-layout',\n  templateUrl: './layout.component.html',\n  styleUrls: ['./layout.component.scss']\n})\nexport class LayoutComponent {\n  constructor(\n      private router: Router,\n      private accountService: AccountService\n  ) {\n      if (this.accountService.userValue) {\n          this.router.navigate(['/']);\n      }\n  }\n}",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./layout.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [
-                    {
-                        "name": "router",
-                        "type": "Router"
-                    },
-                    {
-                        "name": "accountService",
-                        "type": "AccountService"
-                    }
-                ],
-                "line": 10,
-                "jsdoctags": [
-                    {
-                        "name": "router",
-                        "type": "Router",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    },
-                    {
-                        "name": "accountService",
-                        "type": "AccountService",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            "templateData": "<div>\n    <router-outlet></router-outlet>\n</div>"
+            "templateData": "<div *ngIf=\"user\">\n    <div class=\"item1\">\n        <div class=\"head-line\"> <h1>Movie Share</h1><span><img src=\"../assets/svg/movie-recorder-svgrepo-com.svg\"/></span></div>\n        <div class=\"btns\">\n              <app-theme class=\"btn-theme\"></app-theme>\n            <app-button class=\"btn-add\" [buttonConfig]=\"{text: 'Add Movies'}\" (click)=\"OnClick()\"></app-button>\n          <app-button class=\"btn-logout\" [buttonConfig]=\"{src: '../../../assets/svg/logout.svg'}\" (click)=\"logout()\"></app-button>\n        </div>\n        \n    </div>\n    <div *ngIf=\"add\" class=\"item2\">\n        <form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n            <div class=\"container\">\n                <label>Title</label>\n                <input type=\"text\" formControlName=\"title\" />\n                <div *ngIf=\"submitted && f.title.errors\">\n                    <div *ngIf=\"f.title.errors.required\">Title is required</div>\n                </div>\n                <label>Description</label>\n                <input type=\"text\" formControlName=\"desc\" />\n                <div *ngIf=\"submitted && f.desc.errors\">\n                    <div *ngIf=\"f.desc.errors.required\">Description is required</div>\n                </div>\n                <label>Category</label>\n                <input type=\"text\" formControlName=\"category\" />\n                <div *ngIf=\"submitted && f.category.errors\">\n                    <div *ngIf=\"f.category.errors.required\">Category is required</div>\n                </div>\n                <label>Release Date</label>&nbsp;&nbsp;\n                <input type=\"date\" formControlName=\"releaseDate\" />\n                <div *ngIf=\"submitted && f.releaseDate.errors\">\n                    <div *ngIf=\"f.releaseDate.errors.required\">Release Date is required</div>\n                </div>\n                <button>\n                    Add\n                </button>\n                <button class=\"btn-cancel\" (click) = \"onCancel()\">Cancel</button>\n            </div>\n               \n        </form>\n    </div>\n    <div *ngIf=\"isUpdate\" class=\"item2\">\n        <form [formGroup]=\"updateForm\" (ngSubmit)=\"onUpdateLink()\" >\n            <div class=\"container\">\n                <label>Title</label>\n                <input type=\"text\" formControlName=\"updateTitle\" />\n                <div *ngIf=\"submitted && fc.updateTitle.errors\">\n                    <div *ngIf=\"fc.updateTitle.errors.required\">Title is required</div>\n                </div>\n                <label>Description</label>\n                <input type=\"text\" formControlName=\"updateDesc\" />\n                <div *ngIf=\"submitted && fc.updateDesc.errors\">\n                    <div *ngIf=\"fc.updateDesc.errors.required\">Description is required</div>\n                </div>\n                <label>Category</label>\n                <input type=\"text\" formControlName=\"updateCategory\" />\n                <div *ngIf=\"submitted && fc.updateCategory.errors\">\n                    <div *ngIf=\"fc.updateCategory.errors.required\">Category is required</div>\n                </div>\n                <label>Release Date</label>&nbsp;&nbsp;\n                <input type=\"date\" formControlName=\"updateYear\" />\n                <div *ngIf=\"submitted && fc.updateYear.errors\">\n                    <div *ngIf=\"fc.updateYear.errors.required\">Release Date is required</div>\n                </div>\n                <button>\n                    Update\n                </button>\n                <button class=\"btn-cancel\" (click) = \"onCancel()\">Cancel</button>\n            </div>\n        </form>\n    </div>\n    <section>\n        <div *ngFor=\"let data of (selectData$ | async)\">\n            <div>\n                <div>\n                    <sa-card title=\"{{data.title}}\" desc=\"{{data.description}}\" category=\"{{data.category}}\"\n                        year=\"{{data.year}}\" isLoggedIn = \"user\" id = \"{{data.id}}\" (change) = \"onUpdate($event)\" (delete) = \"onDelete($event)\">\n                    </sa-card>\n                </div>\n            </div>\n        </div>\n    </section>\n</div>"
         },
         {
             "name": "LoginComponent",
-            "id": "component-LoginComponent-9775366893911f664de4b450ef7e1b99",
-            "file": "src/app/account/login/login.component.ts",
+            "id": "component-LoginComponent-56797e91e19a74b10bed1bce94c28b4e",
+            "file": "src/app/components/login/login.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2441,7 +2361,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 30
+                    "line": 34
                 },
                 {
                     "name": "onSubmit",
@@ -2449,7 +2369,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 41
+                    "line": 44
                 }
             ],
             "hostBindings": [],
@@ -2457,7 +2377,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormBuilder, Validators } from '@angular/forms';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport { AccountService } from 'src/app/services/account.service';\nimport { first } from 'rxjs/operators';\nimport { Store } from '@ngrx/store';\nimport { AppState } from 'src/app/app.model';\nimport { IsLoggedIn } from 'src/app/store/app.actions';\n\n@Component({\n    selector: 'app-login',\n    templateUrl: './login.component.html',\n    styleUrls: ['./login.component.scss']\n})\nexport class LoginComponent implements OnInit {\n    form: FormGroup;\n    loading = false;\n    submitted = false;\n\n    constructor(\n        private formBuilder: FormBuilder,\n        private route: ActivatedRoute,\n        private router: Router,\n        private accountService: AccountService,\n        public store: Store<AppState>\n    ) {\n\n    }\n\n    ngOnInit() {\n\n        this.form = this.formBuilder.group({\n            username: ['', Validators.required],\n            password: ['', Validators.required]\n        });\n    }\n\n   \n    get f() { return this.form.controls; }\n\n    onSubmit() {\n        this.submitted = true;\n        if (this.form.invalid) {\n            return;\n        }\n\n        this.loading = true;\n        this.accountService.login(this.f.username.value, this.f.password.value)\n            .pipe(first())\n            .subscribe({\n                next: () => {\n                    this.router.navigate(['/home']);\n                    this.store.dispatch(new IsLoggedIn(true));\n                },\n                error: error => {\n                    this.loading = false;\n                }\n            });\n    }\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormBuilder, Validators } from '@angular/forms';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport { AccountService } from 'src/app/services/account.service';\nimport { first } from 'rxjs/operators';\nimport { Store } from '@ngrx/store';\nimport { AppState } from 'src/app/app.model';\nimport { IsLoggedIn } from 'src/app/store/app.actions';\n\n@Component({\n    selector: 'app-login',\n    templateUrl: './login.component.html',\n    styleUrls: ['./login.component.scss']\n})\nexport class LoginComponent implements OnInit {\n    form: FormGroup;\n    loading = false;\n    submitted = false;\n\n    constructor(\n        private formBuilder: FormBuilder,\n        private route: ActivatedRoute,\n        private router: Router,\n        private accountService: AccountService,\n        public store: Store<AppState>\n    ) {\n        this.form = this.formBuilder.group({\n            username: ['', Validators.required],\n            password: ['', Validators.required]\n        });\n\n    }\n\n    ngOnInit() {\n        this.form = this.formBuilder.group({\n            username: ['', Validators.required],\n            password: ['', Validators.required]\n        });\n    }\n\n\n    get f() { return this.form.controls; }\n\n    onSubmit() {\n        this.submitted = true;\n        if (this.form.invalid) {\n            return;\n        }\n\n        this.loading = true;\n        this.accountService.login(this.f.username.value, this.f.password.value)\n            .pipe(first())\n            .subscribe({\n                next: () => {\n                    this.router.navigate(['/home']);\n                    this.store.dispatch(new IsLoggedIn(true));\n                },\n                error: error => {\n                    this.loading = false;\n                }\n            });\n    }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2540,93 +2460,15 @@
                         "name": "f",
                         "type": "",
                         "returnType": "",
-                        "line": 39
+                        "line": 42
                     }
                 }
             },
-            "templateData": "<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n    <h1>Login</h1>\n    <div class=\"container\">\n      <label for=\"uname\"><b>Username</b></label>\n      <input type=\"text\" placeholder=\"Enter Username\" formControlName=\"username\"/>\n      <div *ngIf=\"submitted && f.username.errors\">\n        <div *ngIf=\"f.username.errors.required\">Username is required</div>\n     </div>\n  \n      <label for=\"psw\"><b>Password</b></label>\n      <input type=\"password\" placeholder=\"Enter Password\" formControlName=\"password\"/>\n      <div *ngIf=\"submitted && f.password.errors\">\n        <div *ngIf=\"f.password.errors.required\">Password is required</div>\n      </div>\n      <button type=\"submit\" [disabled]=\"loading\">Login</button>\n      <button class=\"btn-reg\" routerLink=\"../register\">Register</button>\n    </div>\n  </form>\n"
+            "templateData": "<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n    <h1>Login</h1>\n    <div class=\"container\">\n      <label for=\"uname\"><b>Username</b></label>\n      <input type=\"text\" placeholder=\"Enter Username\" formControlName=\"username\"/>\n      <div *ngIf=\"submitted && f.username.errors\">\n        <div *ngIf=\"f.username.errors.required\">Username is required</div>\n     </div>\n  \n      <label for=\"psw\"><b>Password</b></label>\n      <input type=\"password\" placeholder=\"Enter Password\" formControlName=\"password\"/>\n      <div *ngIf=\"submitted && f.password.errors\">\n        <div *ngIf=\"f.password.errors.required\">Password is required</div>\n      </div>\n      <button type=\"submit\" [disabled]=\"loading\">Login</button>\n      <button class=\"btn-reg\" routerLink=\"/register\">Register</button>\n    </div>\n  </form>\n"
         },
         {
             "name": "ModalComponent",
-            "id": "component-ModalComponent-6ec4ee79f0426288aab491227806ea64",
-            "file": "src/app/shared-components/modal/modal.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "sa-modal",
-            "styleUrls": [
-                "./modal.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./modal.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "close",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 16
-                },
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 10
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, OnInit, Input, ElementRef } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'sa-modal',\r\n    templateUrl: './modal.component.html',\r\n    styleUrls: ['./modal.component.scss']\r\n})\r\nexport class ModalComponent implements OnInit {\r\n    constructor(private el: ElementRef) { }\r\n    ngOnInit() {\r\n        // we added this so that when the backdrop is clicked the modal is closed.\r\n        this.el.nativeElement.addEventListener('click', ()=> {\r\n            this.close()\r\n        })\r\n    }\r\n    close() {\r\n        this.el.nativeElement.classList.remove('sshow')\r\n        this.el.nativeElement.classList.add('hhidden')\r\n    }\r\n}",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "\r\n.sshow {\r\n    display: block;\r\n}\r\n.hhidden {\r\n    display: none;\r\n}\r\n.mmodal {\r\n    z-index: 1000;\r\n    position: fixed;\r\n    top: 30px;\r\n    bottom: 0;\r\n    left: 300px;\r\n    width: 500px;\r\n}\r\n.mmodal-body {\r\n    background: #fff;\r\n    margin: 40px;\r\n    padding: 20px;\r\n}\r\n.mmodal-background {\r\n    z-index: 900;\r\n    position: fixed;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #000;\r\n    // makes the below elements visible to a degree.\r\n    opacity: 0.95;\r\n}",
-                    "styleUrl": "./modal.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [
-                    {
-                        "name": "el",
-                        "type": "ElementRef"
-                    }
-                ],
-                "line": 8,
-                "jsdoctags": [
-                    {
-                        "name": "el",
-                        "type": "ElementRef",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"mmodal\">\r\n    <div class=\"mmodal-body\">\r\n        <ng-content></ng-content>\r\n    </div>\r\n</div>\r\n<div class=\"mmodal-background\"></div>"
-        },
-        {
-            "name": "ModalComponent",
-            "id": "component-ModalComponent-d219f042f104b5812efd64a636ae4a21-1",
+            "id": "component-ModalComponent-d219f042f104b5812efd64a636ae4a21",
             "file": "src/app/shared/modal/modal.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2700,6 +2542,84 @@
             "implements": [
                 "OnInit"
             ],
+            "templateData": "<div class=\"mmodal\">\r\n    <div class=\"mmodal-body\">\r\n        <ng-content></ng-content>\r\n    </div>\r\n</div>\r\n<div class=\"mmodal-background\"></div>"
+        },
+        {
+            "name": "ModalComponent",
+            "id": "component-ModalComponent-1d5b2ef4224964336cf64b587efa1880-1",
+            "file": "src/app/shared-components/modal/modal.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-modal",
+            "styleUrls": [
+                "./modal.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./modal.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "close",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 16
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 10
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, Input, ElementRef } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'app-modal',\r\n    templateUrl: './modal.component.html',\r\n    styleUrls: ['./modal.component.scss']\r\n})\r\nexport class ModalComponent implements OnInit {\r\n    constructor(private el: ElementRef) { }\r\n    ngOnInit() {\r\n        // we added this so that when the backdrop is clicked the modal is closed.\r\n        this.el.nativeElement.addEventListener('click', () => {\r\n            this.close();\r\n        });\r\n    }\r\n    close() {\r\n        this.el.nativeElement.classList.remove('sshow');\r\n        this.el.nativeElement.classList.add('hhidden');\r\n    }\r\n}",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "\r\n.sshow {\r\n    display: block;\r\n}\r\n.hhidden {\r\n    display: none;\r\n}\r\n.mmodal {\r\n    z-index: 1000;\r\n    position: fixed;\r\n    top: 30px;\r\n    bottom: 0;\r\n    left: 300px;\r\n    width: 500px;\r\n}\r\n.mmodal-body {\r\n    background: #fff;\r\n    margin: 40px;\r\n    padding: 20px;\r\n}\r\n.mmodal-background {\r\n    z-index: 900;\r\n    position: fixed;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #000;\r\n    // makes the below elements visible to a degree.\r\n    opacity: 0.95;\r\n}",
+                    "styleUrl": "./modal.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "el",
+                        "type": "ElementRef"
+                    }
+                ],
+                "line": 8,
+                "jsdoctags": [
+                    {
+                        "name": "el",
+                        "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ],
             "isDuplicate": true,
             "duplicateId": 1,
             "duplicateName": "ModalComponent-1",
@@ -2708,7 +2628,7 @@
         {
             "name": "RegisterComponent",
             "id": "component-RegisterComponent-121863ae4db09c51975f616bfe98aeb4",
-            "file": "src/app/account/register/register.component.ts",
+            "file": "src/app/components/register/register.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -2849,82 +2769,77 @@
                     }
                 }
             },
-            "templateData": "<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n    <h1>Register</h1>\n    <div class=\"container\">\n        <label for=\"firstName\">First Name</label>\n        <input type=\"text\" formControlName=\"firstName\" />\n        <div *ngIf=\"submitted && f.firstName.errors\">\n            <div *ngIf=\"f.firstName.errors.required\">First Name is required</div>\n        </div>\n        <label for=\"lastName\">Last Name</label>\n        <input type=\"text\" formControlName=\"lastName\" [ngClass]=\"{ 'is-invalid': submitted && f.lastName.errors }\" />\n        <div *ngIf=\"submitted && f.lastName.errors\">\n            <div *ngIf=\"f.lastName.errors.required\">Last Name is required</div>\n        </div>\n    \n    \n        <label for=\"username\">Username</label>\n        <input type=\"text\" formControlName=\"username\" [ngClass]=\"{ 'is-invalid': submitted && f.username.errors }\" />\n        <div *ngIf=\"submitted && f.username.errors\">\n            <div *ngIf=\"f.username.errors.required\">Username is required</div>\n        </div>\n\n    \n        <label for=\"password\">Password</label>\n        <input type=\"password\" formControlName=\"password\"\n            [ngClass]=\"{ 'is-invalid': submitted && f.password.errors }\" />\n        <div *ngIf=\"submitted && f.password.errors\">\n            <div *ngIf=\"f.password.errors.required\">Password is required</div>\n            <div *ngIf=\"f.password.errors.minlength\">Password must be at least 6 characters</div>\n        </div>\n    \n    \n        <button [disabled]=\"loading\">\n            <span *ngIf=\"loading\" class=\"spinner-border spinner-border-sm mr-1\"></span>\n            Register\n        </button>\n        <button class=\"btn-cancel\" routerLink=\"../login\">Cancel</button>\n    </div>\n       \n</form>"
+            "templateData": "<form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n    <h1>Register</h1>\n    <div class=\"container\">\n        <label for=\"firstName\">First Name</label>\n        <input type=\"text\" formControlName=\"firstName\" />\n        <div *ngIf=\"submitted && f.firstName.errors\">\n            <div *ngIf=\"f.firstName.errors.required\">First Name is required</div>\n        </div>\n        <label for=\"lastName\">Last Name</label>\n        <input type=\"text\" formControlName=\"lastName\" [ngClass]=\"{ 'is-invalid': submitted && f.lastName.errors }\" />\n        <div *ngIf=\"submitted && f.lastName.errors\">\n            <div *ngIf=\"f.lastName.errors.required\">Last Name is required</div>\n        </div>\n    \n    \n        <label for=\"username\">Username</label>\n        <input type=\"text\" formControlName=\"username\" [ngClass]=\"{ 'is-invalid': submitted && f.username.errors }\" />\n        <div *ngIf=\"submitted && f.username.errors\">\n            <div *ngIf=\"f.username.errors.required\">Username is required</div>\n        </div>\n\n    \n        <label for=\"password\">Password</label>\n        <input type=\"password\" formControlName=\"password\"\n            [ngClass]=\"{ 'is-invalid': submitted && f.password.errors }\" />\n        <div *ngIf=\"submitted && f.password.errors\">\n            <div *ngIf=\"f.password.errors.required\">Password is required</div>\n            <div *ngIf=\"f.password.errors.minlength\">Password must be at least 6 characters</div>\n        </div>\n    \n    \n        <button [disabled]=\"loading\">\n            <span *ngIf=\"loading\" class=\"spinner-border spinner-border-sm mr-1\"></span>\n            Register\n        </button>\n        <button class=\"btn-cancel\" routerLink=\"/login\">Cancel</button>\n    </div>\n       \n</form>"
+        },
+        {
+            "name": "ThemeComponent",
+            "id": "component-ThemeComponent-cf29417732cbf6ce12ec7b99db9326bc",
+            "file": "src/app/shared-components/theme-toggle/theme.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-theme",
+            "styleUrls": [
+                "./theme.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./theme.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "darkTheme",
+                    "defaultValue": "new FormControl(false)",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                }
+            ],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, Input, ElementRef } from '@angular/core';\r\nimport { ThemeService } from 'src/app/services/theme.service';\r\nimport { FormControl } from '@angular/forms';\r\n\r\n@Component({\r\n    selector: 'app-theme',\r\n    templateUrl: './theme.component.html',\r\n    styleUrls: ['./theme.component.scss']\r\n})\r\nexport class ThemeComponent{\r\n    constructor(private themeService: ThemeService) { \r\n        this.darkTheme.valueChanges.subscribe(value => {\r\n            if (value) {\r\n              this.themeService.toggleDark();\r\n            } else {\r\n              this.themeService.toggleLight();\r\n            }\r\n          });\r\n    }\r\n    darkTheme = new FormControl(false);\r\n}",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".switch {\r\n    position: relative;\r\n    display: inline-block;\r\n    width: 60px;\r\n    height: 34px;\r\n  }\r\n  .switch input { \r\n    opacity: 0;\r\n    width: 0;\r\n    height: 0;\r\n  }\r\n  \r\n  .slider {\r\n    position: absolute;\r\n    cursor: pointer;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    background-color: black;\r\n    -webkit-transition: .4s;\r\n    transition: .4s;\r\n  }\r\n  \r\n  .slider:before {\r\n    position: absolute;\r\n    content: \"\";\r\n    height: 26px;\r\n    width: 26px;\r\n    left: 4px;\r\n    bottom: 4px;\r\n    background-color: #1abc9c;\r\n    -webkit-transition: .4s;\r\n    transition: .4s;\r\n  }    \r\n  input:checked + .slider {\r\n    background-color: white;\r\n  }\r\n  \r\n  input:focus + .slider {\r\n    box-shadow: 0 0 1px white;\r\n  }\r\n  \r\n  input:checked + .slider:before {\r\n    -webkit-transform: translateX(26px);\r\n    -ms-transform: translateX(26px);\r\n    transform: translateX(26px);\r\n  }\r\n  .slider.round {\r\n    border-radius: 34px;\r\n  }\r\n  \r\n  .slider.round:before {\r\n    border-radius: 50%;\r\n  }\r\n",
+                    "styleUrl": "./theme.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "themeService",
+                        "type": "ThemeService"
+                    }
+                ],
+                "line": 10,
+                "jsdoctags": [
+                    {
+                        "name": "themeService",
+                        "type": "ThemeService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "templateData": "<label class=\"switch\">\r\n    <input  id=\"darkTheme\" type=\"checkbox\"  [formControl]=\"darkTheme\"/>\r\n    <span class=\"slider round\"></span>\r\n  </label>"
         }
     ],
     "modules": [
-        {
-            "name": "AccountModule",
-            "children": [
-                {
-                    "type": "providers",
-                    "elements": []
-                },
-                {
-                    "type": "declarations",
-                    "elements": [
-                        {
-                            "name": "LayoutComponent"
-                        },
-                        {
-                            "name": "LoginComponent"
-                        },
-                        {
-                            "name": "RegisterComponent"
-                        }
-                    ]
-                },
-                {
-                    "type": "imports",
-                    "elements": [
-                        {
-                            "name": "AccountRoutingModule"
-                        }
-                    ]
-                },
-                {
-                    "type": "exports",
-                    "elements": []
-                },
-                {
-                    "type": "bootstrap",
-                    "elements": []
-                },
-                {
-                    "type": "classes",
-                    "elements": []
-                }
-            ]
-        },
-        {
-            "name": "AccountRoutingModule",
-            "children": [
-                {
-                    "type": "providers",
-                    "elements": []
-                },
-                {
-                    "type": "declarations",
-                    "elements": []
-                },
-                {
-                    "type": "imports",
-                    "elements": []
-                },
-                {
-                    "type": "exports",
-                    "elements": []
-                },
-                {
-                    "type": "bootstrap",
-                    "elements": []
-                },
-                {
-                    "type": "classes",
-                    "elements": []
-                }
-            ]
-        },
         {
             "name": "AppModule",
             "children": [
@@ -2946,10 +2861,16 @@
                             "name": "AppComponent"
                         },
                         {
-                            "name": "CardComponent"
+                            "name": "HomeComponent"
                         },
                         {
-                            "name": "HomeComponent"
+                            "name": "LoginComponent"
+                        },
+                        {
+                            "name": "RegisterComponent"
+                        },
+                        {
+                            "name": "ThemeComponent"
                         }
                     ]
                 },
@@ -3012,14 +2933,6 @@
     "miscellaneous": {
         "variables": [
             {
-                "name": "accountModule",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/app-routing.module.ts",
-                "type": "",
-                "defaultValue": "() => import('./account/account.module').then(x => x.AccountModule)"
-            },
-            {
                 "name": "darkTheme",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3041,7 +2954,7 @@
                 "subtype": "variable",
                 "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:3000',\n  url:'http://localhost:3000'\n}"
+                "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:4000',\n  url:'http://localhost:3000'\n}"
             },
             {
                 "name": "fakeBackendProvider",
@@ -3279,16 +3192,6 @@
             }
         ],
         "groupedVariables": {
-            "src/app/app-routing.module.ts": [
-                {
-                    "name": "accountModule",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/app-routing.module.ts",
-                    "type": "",
-                    "defaultValue": "() => import('./account/account.module').then(x => x.AccountModule)"
-                }
-            ],
             "src/app/services/theme.service.ts": [
                 {
                     "name": "darkTheme",
@@ -3324,7 +3227,7 @@
                     "subtype": "variable",
                     "file": "src/environments/environment.ts",
                     "type": "object",
-                    "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:3000',\n  url:'http://localhost:3000'\n}"
+                    "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:4000',\n  url:'http://localhost:3000'\n}"
                 }
             ],
             "src/app/helpers/fake-backend-interceptor.interceptor.ts": [
@@ -3589,8 +3492,12 @@
                         ]
                     },
                     {
-                        "path": "account",
-                        "loadChildren": "accountModule"
+                        "path": "login",
+                        "component": "LoginComponent"
+                    },
+                    {
+                        "path": "register",
+                        "component": "RegisterComponent"
                     },
                     {
                         "path": "**",
@@ -3612,43 +3519,6 @@
                 "name": "AppPage",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/account/layout/layout.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "LayoutComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/account/login/login.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "LoginComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/8",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/account/register/register.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "RegisterComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/7",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/app-routing.module.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "accountModule",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -3685,6 +3555,24 @@
                 "name": "HomeComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/21",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/login/login.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "LoginComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/8",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/register/register.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "RegisterComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {
@@ -3833,7 +3721,7 @@
                 "linktype": "component",
                 "name": "ButtonComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/4",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -3852,6 +3740,15 @@
                 "name": "ModalComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared-components/theme-toggle/theme.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ThemeComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
