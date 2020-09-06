@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {environment } from '../../environments/environment'
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,6 @@ export class AppServiceService {
   constructor(public http: HttpClient) { }
 
   public fetchLinks(): Observable<any> {
-    console.log(environment.url,"environment.apiUrl");
-    
     return this.http.get<any>(`${environment.url}/posts`);
   }
 
@@ -23,7 +21,9 @@ export class AppServiceService {
     return this.http.delete<any>(`${environment.url}/posts/${id}`);
   }
 
-  public updateLink(id,requestBody): Observable<any> {
-    return this.http.patch<any>(`${environment.url}/posts/${id}`,requestBody);
+  public updateLink(id, requestBody): Observable<any> {
+    console.log(id,requestBody);
+    
+    return this.http.put<any>(`${environment.url}/posts/${id}`, requestBody);
   }
 }

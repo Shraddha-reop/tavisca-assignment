@@ -34,8 +34,6 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new FetchUserData());
     this.store.dispatch(new IsLoggedIn(true));
     this.selectIsLoggedIn$.subscribe(val => {
-     console.log(val);
-     
       this.user = val
     })
 
@@ -72,20 +70,17 @@ export class HomeComponent implements OnInit {
   }
 
   onUpdate(id) {
-    console.log(id);
-    
     this.id = id
     this.isUpdate = true
     this.add = false
+    window.scrollTo(0, 0);
   }
   onDelete(id) {
-    console.log(id);
-    
     this.store.dispatch(new DeleteLink(id));
     this.store.dispatch(new FetchUserData());
   }
 
-  onCancel(){
+  onCancel() {
     this.add = false;
     this.isUpdate = false
   }
@@ -97,15 +92,15 @@ export class HomeComponent implements OnInit {
     }
     const requestBody = {
       id: this.id,
-      title: this.updateForm.value.title,
-      description: this.updateForm.value.desc,
-      year: this.updateForm.value.updateYear
+      title: this.updateForm.value.updateTitle,
+      description: this.updateForm.value.updateDesc,
+      year: this.updateForm.value.updateYear,
+      category: this.updateForm.value.updateCategory
     }
     this.store.dispatch(new UpdateLink(this.id, requestBody))
     this.store.dispatch(new FetchUserData())
-    console.log(this.updateForm.value, this.id);
+    this.isUpdate = false
   }
-
 
   get f() { return this.form.controls; }
 
@@ -123,6 +118,7 @@ export class HomeComponent implements OnInit {
       id: myId,
       title: this.form.value.title,
       description: this.form.value.desc,
+      category: this.form.value.category,
       year: this.form.value.releaseDate
     }
     this.store.dispatch(new SaveSharedLinks(requestBody))

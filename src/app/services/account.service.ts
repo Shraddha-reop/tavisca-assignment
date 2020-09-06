@@ -45,7 +45,7 @@ export class AccountService {
       this.store.dispatch(new IsLoggedIn(false));
   }
 
-  register(user: User) {
+  register(user) {
       return this.http.post(`${environment.apiUrl}/users/register`, user);
   }
 }

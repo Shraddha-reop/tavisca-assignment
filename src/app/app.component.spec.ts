@@ -11,28 +11,28 @@ import { FormGroupDirective, FormBuilder, FormGroup, FormsModule, ReactiveFormsM
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { CardComponent } from './shared-components/card/card.component';
-import { ThemeService } from './services/theme.service'
+import { ThemeService } from './services/theme.service';
 import { of } from 'rxjs';
 
-async function rejected(promise) {
-  try {
-      await promise
-  } catch (e) {
-      return e
-  }
-  throw new Error('Expected promise to be rejected')
-}
+// async function rejected(promise) {
+//   try {
+//       await promise
+//   } catch (e) {
+//       return e
+//   }
+//   throw new Error('Expected promise to be rejected')
+// }
 
-const toggleDark = {
-  toggleDark() {
-      const darkTheme = {
-        'primary-color': '#455363',
-        'background-color': '#1f2935',
-        'text-color': '#fff'
-      }
-      return of(darkTheme);
-  }
-};
+// const toggleDark = {
+//   toggleDark() {
+//       const darkTheme = {
+//         'primary-color': '#455363',
+//         'background-color': '#1f2935',
+//         'text-color': '#fff'
+//       }
+//       return of(darkTheme);
+//   }
+// };
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -49,7 +49,7 @@ describe('AppComponent', () => {
   };
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,ButtonComponent,CardComponent
+        AppComponent, ButtonComponent, CardComponent
       ],
       imports: [FormsModule,
         ReactiveFormsModule,
@@ -65,7 +65,6 @@ describe('AppComponent', () => {
               id: 1
             }
           },
-          
         }),
         { provide: FormGroupDirective, useValue: formGroupDirective },
         { provide: FormBuilder, useValue: formBuilder }
@@ -79,36 +78,23 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     component.ngOnInit();
   });
-
-  // test("I'm asynchronous", async () => {
+  // it("I'm asynchronous", async () => {
   //   const promise = Promise.reject("boom!")
   //   expect("some precondition").toBeFalsy()
   //   await rejected(promise)
   //   expect("some postcondition").toBeTruthy()
   // })
-  
-  it("I'm asynchronous", async () => {
-    const promise = Promise.reject("boom!")
-    expect("some precondition").toBeFalsy()
-    await rejected(promise)
-    expect("some postcondition").toBeTruthy()
-  })
-  
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-//   it('should create the app', () => {
-//     const fixture = TestBed.createComponent(AppComponent);
-//     const app = fixture.componentInstance;
-//     expect(app).toBeTruthy();
-//   });
-
-  // it(`should have as title 'my-dream-app'`, () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   const app = fixture.componentInstance;
-  //   expect(app.title).toEqual('my-dream-app');
+  // it('should update user', () => {
+  //   const spy = jest.fn();
+  //   component.onUpdate(1);
+  //   expect(component.isUpdate).toEqual(true)
+  //   expect(component.add).toEqual(false)
+  //   expect(spy).toHaveBeenCalledTimes(0);
   // });
 
 //   it('should select breadcrumb  on onBreadCrumbsInit', () => {
@@ -117,12 +103,11 @@ describe('AppComponent', () => {
 //     expect(spy.mock.calls[0][0]).toMatchObject({ type: AppActionType.FETCH_USER_DATA });
 // });
 
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement;
-  //   expect(compiled.querySelector('.content span').textContent).toContain('my-dream-app app is running!');
-  // });
+// it('should logout user', () => {
+//   const spy = jest.fn();
+//   component.logout();
+//   expect(spy).toHaveBeenCalledTimes(0);
+// });
 
   // it('should return addition', () => {
   //   const fixture = TestBed.createComponent(AppComponent);

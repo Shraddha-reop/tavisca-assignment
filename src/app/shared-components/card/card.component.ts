@@ -20,8 +20,6 @@ export class CardComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        console.log(this.title, this.desc, this.category);
-
     }
     update() {
         this.change.emit(this.id);

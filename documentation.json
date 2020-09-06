@@ -283,7 +283,7 @@
         },
         {
             "name": "AppServiceService",
-            "id": "injectable-AppServiceService-039cfbacc7b7e22fe0a93005cdee797c",
+            "id": "injectable-AppServiceService-f122eb2f77ab16314ff7c343055e8547",
             "file": "src/app/services/app-service.service.ts",
             "properties": [
                 {
@@ -291,7 +291,7 @@
                     "type": "HttpClient",
                     "optional": false,
                     "description": "",
-                    "line": 9,
+                    "line": 10,
                     "modifierKind": [
                         114
                     ]
@@ -309,7 +309,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 16,
+                    "line": 18,
                     "modifierKind": [
                         114
                     ],
@@ -334,7 +334,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 21,
+                    "line": 22,
                     "modifierKind": [
                         114
                     ],
@@ -354,7 +354,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 11,
+                    "line": 12,
                     "modifierKind": [
                         114
                     ]
@@ -374,7 +374,7 @@
                     "optional": false,
                     "returnType": "Observable<any>",
                     "typeParameters": [],
-                    "line": 27,
+                    "line": 26,
                     "modifierKind": [
                         114
                     ],
@@ -397,7 +397,7 @@
                 }
             ],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { HttpClient } from '@angular/common/http';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class AppServiceService {\n  constructor(public http: HttpClient) { }\n\n  public fetchLinks(): Observable<any> {\n    console.log(\"service\");\n    return this.http.get<any>(`http://localhost:3000/posts`);\n  }\n\n  public addLinks(requestBody): Observable<any> {\n    console.log(requestBody);\n    return this.http.post<any>(`http://localhost:3000/posts`, requestBody);\n  }\n\n  public deleteLink(id): Observable<any> {\n    console.log(id);\n    console.log(`http://localhost:3000/posts/${id}`);\n    return this.http.delete<any>(`http://localhost:3000/posts/${id}`);\n  }\n\n  public updateLink(id,requestBody): Observable<any> {\n    console.log(id,requestBody,\"update link\");\n    return this.http.patch<any>(`http://localhost:3000/posts/${id}`,requestBody);\n  }\n}\n",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { HttpClient } from '@angular/common/http';\nimport {environment } from '../../environments/environment'\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class AppServiceService {\n  constructor(public http: HttpClient) { }\n\n  public fetchLinks(): Observable<any> {\n    console.log(environment.url,\"environment.apiUrl\");\n    \n    return this.http.get<any>(`${environment.url}/posts`);\n  }\n\n  public addLinks(requestBody): Observable<any> {\n    return this.http.post<any>(`${environment.url}/posts`, requestBody);\n  }\n\n  public deleteLink(id): Observable<any> {\n    return this.http.delete<any>(`${environment.url}/posts/${id}`);\n  }\n\n  public updateLink(id,requestBody): Observable<any> {\n    return this.http.patch<any>(`${environment.url}/posts/${id}`,requestBody);\n  }\n}\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -407,7 +407,7 @@
                         "type": "HttpClient"
                     }
                 ],
-                "line": 8,
+                "line": 9,
                 "jsdoctags": [
                     {
                         "name": "http",
@@ -1643,72 +1643,7 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-c5e3aa282df5e72f3636ef6573e1261f-1",
-            "file": "src/app/shared/button/button.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-button",
-            "styleUrls": [
-                "./button.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./button.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "buttonConfig",
-                    "line": 9,
-                    "type": "any"
-                }
-            ],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 12
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-button',\r\n  templateUrl: './button.component.html',\r\n  styleUrls: ['./button.component.scss']\r\n})\r\nexport class ButtonComponent implements OnInit {\r\n  @Input() buttonConfig: any;\r\n  constructor() {}\r\n\r\n  ngOnInit() {}\r\n}",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": ":host {\r\n      color: var(--text-color);\r\n    }\r\n.text-btn{\r\n      background-color: #1abc9c;\r\n      color: white;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      width: 100%;\r\n      font-size: 18px;\r\n  }\r\n\r\n  .img-btn{\r\n        position: 'relative';\r\n        width: '100px';\r\n        height: '100px';\r\n        cursor: pointer;\r\n  }\r\n\r\n//   .storybook-button--secondary {\r\n//       color: #333;\r\n//       background-color: transparent;\r\n//       box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\r\n//     }\r\n//     .storybook-button--small {\r\n//       font-size: 12px;\r\n//       padding: 10px 16px;\r\n//     }\r\n//     .storybook-button--medium {\r\n//       font-size: 14px;\r\n//       padding: 11px 20px;\r\n//     }\r\n//     .storybook-button--large {\r\n//       font-size: 16px;\r\n//       padding: 12px 24px;\r\n//     }\r\n    ",
-                    "styleUrl": "./button.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [],
-                "line": 9
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "ButtonComponent-1",
-            "templateData": "<ng-container *ngTemplateOutlet=\"buttonConfig['text'] ? text : image\">\r\n</ng-container>\r\n<ng-template #text>\r\n    <button type=\"button\" class=\"text-btn\">\r\n        {{ buttonConfig.text}}\r\n    </button>\r\n</ng-template>\r\n<ng-template #image class=\"img-btn\">\r\n    <img alt=\"image button\" [src]=\"buttonConfig.src\">\r\n</ng-template>"
-        },
-        {
-            "name": "ButtonComponent",
-            "id": "component-ButtonComponent-aa16f6c4252f133a35e0fcb01c0b745a-2",
+            "id": "component-ButtonComponent-aa16f6c4252f133a35e0fcb01c0b745a-1",
             "file": "src/app/shared-components/btn-component/btn-component.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1767,74 +1702,36 @@
                 "OnInit"
             ],
             "isDuplicate": true,
-            "duplicateId": 2,
-            "duplicateName": "ButtonComponent-2",
+            "duplicateId": 1,
+            "duplicateName": "ButtonComponent-1",
             "templateData": "<ng-container *ngTemplateOutlet=\"buttonConfig['text'] ? text : image\">\r\n</ng-container>\r\n<ng-template #text>\r\n    <button type=\"button\" class=\"text-btn\">\r\n        {{ buttonConfig.text}}\r\n    </button>\r\n</ng-template>\r\n<ng-template #image class=\"img-btn\">\r\n    <img alt=\"image button\" [src]=\"buttonConfig.src\">\r\n</ng-template>"
         },
         {
-            "name": "CardComponent",
-            "id": "component-CardComponent-bafb7631b1468b7fa627a2bfdee9ee97",
-            "file": "src/app/shared/card/card.component.ts",
+            "name": "ButtonComponent",
+            "id": "component-ButtonComponent-c5e3aa282df5e72f3636ef6573e1261f-2",
+            "file": "src/app/shared/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "sa-card",
+            "selector": "app-button",
             "styleUrls": [
-                "./card.component.scss"
+                "./button.component.scss"
             ],
             "styles": [],
             "templateUrl": [
-                "./card.component.html"
+                "./button.component.html"
             ],
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "category",
-                    "line": 11,
-                    "type": "any"
-                },
-                {
-                    "name": "desc",
-                    "line": 10,
-                    "type": "any"
-                },
-                {
-                    "name": "id",
-                    "line": 13,
-                    "type": "any"
-                },
-                {
-                    "name": "isLoggedIn",
-                    "line": 14,
-                    "type": "boolean"
-                },
-                {
-                    "name": "title",
+                    "name": "buttonConfig",
                     "line": 9,
                     "type": "any"
-                },
-                {
-                    "name": "year",
-                    "line": 12,
-                    "type": "any"
                 }
             ],
-            "outputsClass": [
-                {
-                    "name": "change",
-                    "defaultValue": "new EventEmitter<any>()",
-                    "line": 16,
-                    "type": "EventEmitter<any>"
-                },
-                {
-                    "name": "delete",
-                    "defaultValue": "new EventEmitter<any>()",
-                    "line": 19,
-                    "type": "EventEmitter<any>"
-                }
-            ],
+            "outputsClass": [],
             "propertiesClass": [],
             "methodsClass": [
                 {
@@ -1843,23 +1740,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 22
-                },
-                {
-                    "name": "remove",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 30
-                },
-                {
-                    "name": "update",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 26
+                    "line": 12
                 }
             ],
             "hostBindings": [],
@@ -1867,12 +1748,12 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'sa-card',\r\n    templateUrl: './card.component.html',\r\n    styleUrls: ['./card.component.scss']\r\n})\r\nexport class CardComponent implements OnInit {\r\n    @Input() title: any;\r\n    @Input() desc: any;\r\n    @Input() category: any;\r\n    @Input() year: any;\r\n    @Input() id: any;\r\n    @Input() isLoggedIn: boolean;\r\n    @Output()\r\n    change: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n    @Output()\r\n    delete: EventEmitter<any> = new EventEmitter<any>();\r\n    constructor() { }\r\n\r\n    ngOnInit() {\r\n        console.log(this.title, this.desc, this.category);\r\n\r\n    }\r\n    update() {\r\n        this.change.emit(this.id);\r\n    }\r\n\r\n    remove(){\r\n        this.delete.emit(this.id)\r\n    }\r\n}",
+            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-button',\r\n  templateUrl: './button.component.html',\r\n  styleUrls: ['./button.component.scss']\r\n})\r\nexport class ButtonComponent implements OnInit {\r\n  @Input() buttonConfig: any;\r\n  constructor() {}\r\n\r\n  ngOnInit() {}\r\n}",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".card {\r\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\r\n    transition: 0.3s;\r\n    width: 100%;\r\n    margin-top: 1rem;\r\n  }\r\n  \r\n  .card:hover {\r\n    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);\r\n  }\r\n  \r\n  .container {\r\n      \r\n    padding: 2px 16px;\r\n    display: grid;\r\n    grid-template-columns: auto auto auto auto;\r\n    img{\r\n        margin-top: 4.5rem;\r\n    }\r\n     .btn-remove{\r\n        margin-top: 3.5rem;\r\n    }\r\n    .btn-update{\r\n        margin-top: 3.5rem;\r\n    }\r\n  }",
-                    "styleUrl": "./card.component.scss"
+                    "data": ":host {\r\n      color: var(--text-color);\r\n    }\r\n.text-btn{\r\n      background-color: #1abc9c;\r\n      color: white;\r\n      margin: 8px 0;\r\n      border: none;\r\n      cursor: pointer;\r\n      width: 100%;\r\n      font-size: 18px;\r\n  }\r\n\r\n  .img-btn{\r\n        position: 'relative';\r\n        width: '100px';\r\n        height: '100px';\r\n        cursor: pointer;\r\n  }\r\n\r\n//   .storybook-button--secondary {\r\n//       color: #333;\r\n//       background-color: transparent;\r\n//       box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\r\n//     }\r\n//     .storybook-button--small {\r\n//       font-size: 12px;\r\n//       padding: 10px 16px;\r\n//     }\r\n//     .storybook-button--medium {\r\n//       font-size: 14px;\r\n//       padding: 11px 20px;\r\n//     }\r\n//     .storybook-button--large {\r\n//       font-size: 16px;\r\n//       padding: 12px 24px;\r\n//     }\r\n    ",
+                    "styleUrl": "./button.component.scss"
                 }
             ],
             "stylesData": "",
@@ -1880,16 +1761,19 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 19
+                "line": 9
             },
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"card\">\r\n    <div class=\"container\">\r\n        <img src=\"../../../assets/svg/movie.svg\">\r\n        <div class=\"data\">\r\n            <h2><b>{{title}}</b></h2>\r\n            <p>{{desc}}</p>\r\n            <p>Category: <span> &nbsp;<b>{{category}}</b></span></p>\r\n            <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>\r\n        </div>\r\n        <app-button class=\"btn-update\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/update.svg'}\" (click) = \"update()\"></app-button>\r\n        <app-button class=\"btn-remove\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/delete.svg'}\" (click) = \"remove()\"></app-button>\r\n    </div>\r\n</div>"
+            "isDuplicate": true,
+            "duplicateId": 2,
+            "duplicateName": "ButtonComponent-2",
+            "templateData": "<ng-container *ngTemplateOutlet=\"buttonConfig['text'] ? text : image\">\r\n</ng-container>\r\n<ng-template #text>\r\n    <button type=\"button\" class=\"text-btn\">\r\n        {{ buttonConfig.text}}\r\n    </button>\r\n</ng-template>\r\n<ng-template #image class=\"img-btn\">\r\n    <img alt=\"image button\" [src]=\"buttonConfig.src\">\r\n</ng-template>"
         },
         {
             "name": "CardComponent",
-            "id": "component-CardComponent-bafb7631b1468b7fa627a2bfdee9ee97-1",
+            "id": "component-CardComponent-bafb7631b1468b7fa627a2bfdee9ee97",
             "file": "src/app/shared-components/card/card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2001,72 +1885,126 @@
             "implements": [
                 "OnInit"
             ],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "CardComponent-1",
             "templateData": "<div class=\"card\">\r\n    <div class=\"container\">\r\n        <img src=\"../../../assets/svg/popcorn.svg\">\r\n        <div class=\"data\">\r\n            <h2><b>{{title}}</b></h2>\r\n            <p>{{desc}}</p>\r\n            <p>Category: <span> &nbsp;<b>{{category}}</b></span></p>\r\n            <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>\r\n        </div>\r\n        <app-button class=\"btn-update\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/update.svg'}\" (click) = \"update()\"></app-button>\r\n        <app-button class=\"btn-remove\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/delete.svg'}\" (click) = \"remove()\"></app-button>\r\n    </div>\r\n</div>"
         },
         {
-            "name": "HeaderComponent",
-            "id": "component-HeaderComponent-246e2a69dc126a3bd76c6328dd3b93e2",
-            "file": "src/stories/header.component.ts",
+            "name": "CardComponent",
+            "id": "component-CardComponent-bafb7631b1468b7fa627a2bfdee9ee97-1",
+            "file": "src/app/shared/card/card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "storybook-header",
+            "selector": "sa-card",
             "styleUrls": [
-                "./header.css"
+                "./card.component.scss"
             ],
             "styles": [],
-            "template": "<header>    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          primary\n          size=\"small\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </header>",
-            "templateUrl": [],
+            "templateUrl": [
+                "./card.component.html"
+            ],
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "user",
-                    "defaultValue": "null",
-                    "line": 53,
-                    "type": "unknown"
+                    "name": "category",
+                    "line": 11,
+                    "type": "any"
+                },
+                {
+                    "name": "desc",
+                    "line": 10,
+                    "type": "any"
+                },
+                {
+                    "name": "id",
+                    "line": 13,
+                    "type": "any"
+                },
+                {
+                    "name": "isLoggedIn",
+                    "line": 14,
+                    "type": "boolean"
+                },
+                {
+                    "name": "title",
+                    "line": 9,
+                    "type": "any"
+                },
+                {
+                    "name": "year",
+                    "line": 12,
+                    "type": "any"
                 }
             ],
             "outputsClass": [
                 {
-                    "name": "onCreateAccount",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "line": 62,
-                    "type": "EventEmitter"
+                    "name": "change",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "line": 16,
+                    "type": "EventEmitter<any>"
                 },
                 {
-                    "name": "onLogin",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "line": 56,
-                    "type": "EventEmitter"
-                },
-                {
-                    "name": "onLogout",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "line": 59,
-                    "type": "EventEmitter"
+                    "name": "delete",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "line": 19,
+                    "type": "EventEmitter<any>"
                 }
             ],
             "propertiesClass": [],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 22
+                },
+                {
+                    "name": "remove",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 30
+                },
+                {
+                    "name": "update",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 26
+                }
+            ],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\n\n@Component({\n  selector: 'storybook-header',\n  template: `<header>\n    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          primary\n          size=\"small\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </header>`,\n  styleUrls: ['./header.css'],\n})\nexport default class HeaderComponent {\n  @Input()\n  user: unknown = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
+            "sourceCode": "import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'sa-card',\r\n    templateUrl: './card.component.html',\r\n    styleUrls: ['./card.component.scss']\r\n})\r\nexport class CardComponent implements OnInit {\r\n    @Input() title: any;\r\n    @Input() desc: any;\r\n    @Input() category: any;\r\n    @Input() year: any;\r\n    @Input() id: any;\r\n    @Input() isLoggedIn: boolean;\r\n    @Output()\r\n    change: EventEmitter<any> = new EventEmitter<any>();\r\n\r\n    @Output()\r\n    delete: EventEmitter<any> = new EventEmitter<any>();\r\n    constructor() { }\r\n\r\n    ngOnInit() {\r\n        console.log(this.title, this.desc, this.category);\r\n\r\n    }\r\n    update() {\r\n        this.change.emit(this.id);\r\n    }\r\n\r\n    remove(){\r\n        this.delete.emit(this.id)\r\n    }\r\n}",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".wrapper {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\nsvg {\n  display: inline-block;\n  vertical-align: top;\n}\n\nh1 {\n  font-weight: 900;\n  font-size: 20px;\n  line-height: 1;\n  margin: 6px 0 6px 10px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nbutton + button {\n  margin-left: 10px;\n}\n",
-                    "styleUrl": "./header.css"
+                    "data": ".card {\r\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\r\n    transition: 0.3s;\r\n    width: 100%;\r\n    margin-top: 1rem;\r\n  }\r\n  \r\n  .card:hover {\r\n    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);\r\n  }\r\n  \r\n  .container {\r\n      \r\n    padding: 2px 16px;\r\n    display: grid;\r\n    grid-template-columns: auto auto auto auto;\r\n    img{\r\n        margin-top: 4.5rem;\r\n    }\r\n     .btn-remove{\r\n        margin-top: 3.5rem;\r\n    }\r\n    .btn-update{\r\n        margin-top: 3.5rem;\r\n    }\r\n  }",
+                    "styleUrl": "./card.component.scss"
                 }
             ],
-            "stylesData": ""
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 19
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "CardComponent-1",
+            "templateData": "<div class=\"card\">\r\n    <div class=\"container\">\r\n        <img src=\"../../../assets/svg/movie.svg\">\r\n        <div class=\"data\">\r\n            <h2><b>{{title}}</b></h2>\r\n            <p>{{desc}}</p>\r\n            <p>Category: <span> &nbsp;<b>{{category}}</b></span></p>\r\n            <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>\r\n        </div>\r\n        <app-button class=\"btn-update\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/update.svg'}\" (click) = \"update()\"></app-button>\r\n        <app-button class=\"btn-remove\" *ngIf=\"isLoggedIn\" [buttonConfig]=\"{src: '../../../assets/svg/delete.svg'}\" (click) = \"remove()\"></app-button>\r\n    </div>\r\n</div>"
         },
         {
             "name": "HomeComponent",
@@ -2610,85 +2548,7 @@
         },
         {
             "name": "ModalComponent",
-            "id": "component-ModalComponent-d219f042f104b5812efd64a636ae4a21",
-            "file": "src/app/shared/modal/modal.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "sa-modal",
-            "styleUrls": [
-                "./modal.component.scss"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./modal.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "close",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 16
-                },
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 10
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, OnInit, Input, ElementRef } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'sa-modal',\r\n    templateUrl: './modal.component.html',\r\n    styleUrls: ['./modal.component.scss']\r\n})\r\nexport class ModalComponent implements OnInit {\r\n    constructor(private el: ElementRef) { }\r\n    ngOnInit() {\r\n        // we added this so that when the backdrop is clicked the modal is closed.\r\n        this.el.nativeElement.addEventListener('click', () => {\r\n            this.close()\r\n        })\r\n    }\r\n    close() {\r\n        this.el.nativeElement.classList.remove('sshow')\r\n        this.el.nativeElement.classList.add('hhidden')\r\n    }\r\n}",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "// this makes the .modal visible\r\n.sshow {\r\n    display: block;\r\n}\r\n// this makes the element hidden/invisible\r\n.hhidden {\r\n    display: none;\r\n}\r\n// this holds the CSS display of the modal\r\n.mmodal {\r\n    // makes it hover above all elements\r\n    z-index: 1000;\r\n    position: fixed;\r\n    top: 30px;\r\n    bottom: 0;\r\n    left: 300px;\r\n    width: 500px;\r\n}\r\n.mmodal-body {\r\n    background: #fff;\r\n    margin: 40px;\r\n    padding: 20px;\r\n}\r\n// backdrop color\r\n.mmodal-background {\r\n    // should be below the .modal but above all other elements\r\n    z-index: 900;\r\n    position: fixed;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #000;\r\n    // makes the below elements visible to a degree.\r\n    opacity: 0.95;\r\n}",
-                    "styleUrl": "./modal.component.scss"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [
-                    {
-                        "name": "el",
-                        "type": "ElementRef"
-                    }
-                ],
-                "line": 8,
-                "jsdoctags": [
-                    {
-                        "name": "el",
-                        "type": "ElementRef",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"mmodal\">\r\n    <div class=\"mmodal-body\">\r\n        <ng-content></ng-content>\r\n    </div>\r\n</div>\r\n<div class=\"mmodal-background\"></div>"
-        },
-        {
-            "name": "ModalComponent",
-            "id": "component-ModalComponent-6ec4ee79f0426288aab491227806ea64-1",
+            "id": "component-ModalComponent-6ec4ee79f0426288aab491227806ea64",
             "file": "src/app/shared-components/modal/modal.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2735,6 +2595,84 @@
             "styleUrlsData": [
                 {
                     "data": "\r\n.sshow {\r\n    display: block;\r\n}\r\n.hhidden {\r\n    display: none;\r\n}\r\n.mmodal {\r\n    z-index: 1000;\r\n    position: fixed;\r\n    top: 30px;\r\n    bottom: 0;\r\n    left: 300px;\r\n    width: 500px;\r\n}\r\n.mmodal-body {\r\n    background: #fff;\r\n    margin: 40px;\r\n    padding: 20px;\r\n}\r\n.mmodal-background {\r\n    z-index: 900;\r\n    position: fixed;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #000;\r\n    // makes the below elements visible to a degree.\r\n    opacity: 0.95;\r\n}",
+                    "styleUrl": "./modal.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "el",
+                        "type": "ElementRef"
+                    }
+                ],
+                "line": 8,
+                "jsdoctags": [
+                    {
+                        "name": "el",
+                        "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"mmodal\">\r\n    <div class=\"mmodal-body\">\r\n        <ng-content></ng-content>\r\n    </div>\r\n</div>\r\n<div class=\"mmodal-background\"></div>"
+        },
+        {
+            "name": "ModalComponent",
+            "id": "component-ModalComponent-d219f042f104b5812efd64a636ae4a21-1",
+            "file": "src/app/shared/modal/modal.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "sa-modal",
+            "styleUrls": [
+                "./modal.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./modal.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "close",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 16
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 10
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, Input, ElementRef } from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'sa-modal',\r\n    templateUrl: './modal.component.html',\r\n    styleUrls: ['./modal.component.scss']\r\n})\r\nexport class ModalComponent implements OnInit {\r\n    constructor(private el: ElementRef) { }\r\n    ngOnInit() {\r\n        // we added this so that when the backdrop is clicked the modal is closed.\r\n        this.el.nativeElement.addEventListener('click', () => {\r\n            this.close()\r\n        })\r\n    }\r\n    close() {\r\n        this.el.nativeElement.classList.remove('sshow')\r\n        this.el.nativeElement.classList.add('hhidden')\r\n    }\r\n}",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "// this makes the .modal visible\r\n.sshow {\r\n    display: block;\r\n}\r\n// this makes the element hidden/invisible\r\n.hhidden {\r\n    display: none;\r\n}\r\n// this holds the CSS display of the modal\r\n.mmodal {\r\n    // makes it hover above all elements\r\n    z-index: 1000;\r\n    position: fixed;\r\n    top: 30px;\r\n    bottom: 0;\r\n    left: 300px;\r\n    width: 500px;\r\n}\r\n.mmodal-body {\r\n    background: #fff;\r\n    margin: 40px;\r\n    padding: 20px;\r\n}\r\n// backdrop color\r\n.mmodal-background {\r\n    // should be below the .modal but above all other elements\r\n    z-index: 900;\r\n    position: fixed;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-color: #000;\r\n    // makes the below elements visible to a degree.\r\n    opacity: 0.95;\r\n}",
                     "styleUrl": "./modal.component.scss"
                 }
             ],
@@ -3103,7 +3041,7 @@
                 "subtype": "variable",
                 "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:4000'\n}"
+                "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:3000',\n  url:'http://localhost:3000'\n}"
             },
             {
                 "name": "fakeBackendProvider",
@@ -3128,22 +3066,6 @@
                 "file": "src/app/services/theme.service.ts",
                 "type": "object",
                 "defaultValue": "{\r\n  'primary-color': '#fff',\r\n  'background-color': '#fff',\r\n  'text-color': '#2d2d2d'\r\n}"
-            },
-            {
-                "name": "LoggedIn",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "LoggedOut",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "mock",
@@ -3208,14 +3130,6 @@
                 "file": "src/stories/Button.stories.ts",
                 "type": "Story<Button>",
                 "defaultValue": "(args: Button) => ({\n  component: Button,\n  props: args,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Header.stories.ts",
-                "type": "Story<Header>",
-                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
             },
             {
                 "name": "users",
@@ -3410,7 +3324,7 @@
                     "subtype": "variable",
                     "file": "src/environments/environment.ts",
                     "type": "object",
-                    "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:4000'\n}"
+                    "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:3000',\n  url:'http://localhost:3000'\n}"
                 }
             ],
             "src/app/helpers/fake-backend-interceptor.interceptor.ts": [
@@ -3479,32 +3393,6 @@
                     "file": "src/stories/Button.stories.ts",
                     "type": "Story<Button>",
                     "defaultValue": "(args: Button) => ({\n  component: Button,\n  props: args,\n})"
-                }
-            ],
-            "src/stories/Header.stories.ts": [
-                {
-                    "name": "LoggedIn",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "LoggedOut",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/Header.stories.ts",
-                    "type": "Story<Header>",
-                    "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
                 }
             ],
             "src/jestGlobalMocks.ts": [
@@ -4230,36 +4118,6 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedIn",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "LoggedOut",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/Header.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
                 "filePath": "src/stories/button.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -4267,15 +4125,6 @@
                 "coveragePercent": 83,
                 "coverageCount": "5/6",
                 "status": "very-good"
-            },
-            {
-                "filePath": "src/stories/header.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "HeaderComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
             }
         ]
     }

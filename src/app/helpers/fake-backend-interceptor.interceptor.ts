@@ -39,6 +39,7 @@ export class FakeBackendInterceptorInterceptor implements HttpInterceptor {
         const user = body
 
         if (users.find(x => x.username === user.username)) {
+            console.log('Username "' + user.username + '" is already taken');
             return error('Username "' + user.username + '" is already taken')
         }
 

@@ -17,6 +17,6 @@
   ],
   "include": [
     "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts", "src/app/app.component.spec.ts", "src/app/shared-components/btn-component/btn-component.component.spec.ts"
   ]
 }

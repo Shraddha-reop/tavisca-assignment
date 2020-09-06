@@ -1,4 +1,4 @@
-<ng-container *ngTemplateOutlet="buttonConfig['text'] ? text : image">
+<ng-container *ngIf="buttonConfig['text'] ? text : image">
 </ng-container>
 <ng-template #text>
     <button type="button" class="text-btn">

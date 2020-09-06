@@ -59,4 +59,30 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should logout user', () => {
+    const spy = jest.fn();
+    component.logout();
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should logout user', () => {
+    const spy = jest.fn();
+    component.logout();
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should update user', () => {
+    const spy = jest.fn();
+    component.onUpdate(1);
+    expect(component.isUpdate).toEqual(true)
+    expect(component.add).toEqual(false)
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should delete user', () => {
+    const spy = jest.fn();
+    component.onDelete(1);
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
 });
