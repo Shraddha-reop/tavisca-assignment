@@ -8,6 +8,7 @@
             <p>Year:<span>&nbsp;<b>{{year}}</b></span></p>
         </div>
         <app-button class="btn-update" *ngIf="isLoggedIn" [buttonConfig]="{src: '../../../assets/svg/update.svg'}" (click) = "update()"></app-button>
+       
         <app-button class="btn-remove" *ngIf="isLoggedIn" [buttonConfig]="{src: '../../../assets/svg/delete.svg'}" (click) = "remove()"></app-button>
     </div>
 </div>

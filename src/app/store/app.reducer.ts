@@ -13,10 +13,22 @@ export function appReducer(state: AppModelState = new AppModelState(), action: A
                 ...state,
                 isLoggedIn: action.isLoggedIn
             };
-            case AppActionType.SAVE_SHARED_LINKS_SUCCESS:
+        case AppActionType.SAVE_SHARED_LINKS_SUCCESS:
             return {
                 ...state,
                 data: action.payload
+            };
+
+        case AppActionType.IS_ERROR:
+            return {
+                ...state,
+                error: action.err
+            };
+
+        case AppActionType.USER_LOGIN_ERROR:
+            return {
+                ...state,
+                error: action.err
             };
         default: {
             return state;

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.model';
-import { IsLoggedIn } from 'src/app/store/app.actions';
+import { IsLoggedIn, UserLogin } from 'src/app/store/app.actions';
 
 @Component({
     selector: 'app-login',
@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     form: FormGroup;
     loading = false;
     submitted = false;
+    public error;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -41,7 +42,6 @@ export class LoginComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-
         this.loading = true;
         this.accountService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
                     this.store.dispatch(new IsLoggedIn(true));
                 },
                 error: error => {
-                    this.loading = false;
+                   this.error = error;
                 }
             });
     }

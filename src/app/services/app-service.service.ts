@@ -22,8 +22,6 @@ export class AppServiceService {
   }
 
   public updateLink(id, requestBody): Observable<any> {
-    console.log(id, requestBody);
-
     return this.http.put<any>(`${environment.url}/posts/${id}`, requestBody);
   }
 }

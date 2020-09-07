@@ -29,11 +29,8 @@ export class FakeBackendInterceptorInterceptor implements HttpInterceptor {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
             if (!user) {
-                const error = 'Username or password is incorrect';
-               
-                return throwError({ error: { error } });
+                return error('Incorrect Username or Password');
             }
-
             return ok({
                 ...basicDetails(user),
                 token: 'fake-jwt-token'
@@ -42,10 +39,7 @@ export class FakeBackendInterceptorInterceptor implements HttpInterceptor {
 
         function register() {
             const user = body;
-
             if (users.find(x => x.username === user.username)) {
-                console.log('Username "' + user.username + '" is already taken');
-                this.modalService.open(error);
                 return error('Username "' + user.username + '" is already taken');
             }
 

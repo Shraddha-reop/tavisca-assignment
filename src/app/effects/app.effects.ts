@@ -3,8 +3,25 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.model';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { AppServiceService } from '../services/app-service.service';
-import { AppActionType, FetchUserData, FetchUserDataSuccess, FetchUserDataError, SaveSharedLinks, SaveSharedLinksSuccess, DeleteLink, DeleteLinkSuccess, DeleteLinkError, UpdateLink, UpdateLinkSuccess, UpdateLinkError } from '../store/app.actions';
+import {
+    AppActionType,
+    FetchUserData,
+    FetchUserDataSuccess,
+    FetchUserDataError,
+    SaveSharedLinks,
+    SaveSharedLinksSuccess,
+    DeleteLink,
+    DeleteLinkSuccess,
+    DeleteLinkError,
+    UpdateLink,
+    UpdateLinkSuccess,
+    UpdateLinkError,
+    UserLogin,
+    UserLoginSuccess,
+    UserLoginError
+} from '../store/app.actions';
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { AccountService } from '../services/account.service';
 import { of } from 'rxjs';
 @Injectable()
 export class AppEffects {
@@ -46,13 +63,29 @@ export class AppEffects {
     public updateLink$ = this.actions$.pipe(
         ofType(AppActionType.UPDATE_LINK),
         switchMap((action: UpdateLink) => {
-            return this.activityService.updateLink(action.id,action.requestBody).pipe(
+            return this.activityService.updateLink(action.id, action.requestBody).pipe(
                 map((obj: any) => new UpdateLinkSuccess(obj)),
                 catchError(error => of(new UpdateLinkError(error.status)))
             );
         })
     );
-    
-    constructor( private store: Store<AppState>,private actions$: Actions, private activityService: AppServiceService,) {}
+
+    @Effect()
+    public userLogin$ = this.actions$.pipe(
+        ofType(AppActionType.USER_LOGIN),
+        switchMap((action: UserLogin) => {
+            return this.accountService.login(action.username, action.password).pipe(
+                map((obj: any) => new UserLoginSuccess(obj)),
+                catchError(error => of(new UserLoginError(error)))
+            );
+        })
+    );
+
+    constructor(
+        private store: Store<AppState>,
+        private actions$: Actions,
+        private activityService: AppServiceService,
+        private accountService: AccountService
+    ) { }
 
 }

@@ -114,11 +114,12 @@ describe('HomeComponent', () => {
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
-  it('should onUpdateLink user', () => {
+  it('should onSubmit user', () => {
     const spy = jest.fn();
     component.onSubmit();
     expect(component.submitted).toEqual(true);
     expect(component.add).toEqual(false);
     expect(spy).toHaveBeenCalledTimes(0);
   });
+  
 });

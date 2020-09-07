@@ -1,27 +1,28 @@
-<div class="grid-container">
+<section class="grid-container">
   <div class="item1" *ngIf="!user">
-    <div class="head-line"> <h1>Movie Share</h1><span><img src="../assets/svg/movie-recorder-svgrepo-com.svg"/></span></div>
+    <div class="head-line">
+      <h1>Movie Share</h1><span><img src="../assets/svg/movie-recorder-svgrepo-com.svg" /></span>
+    </div>
     <div class="top-nav">
       <div class="btns">
-        <app-button class="btns-text" [buttonConfig]="{text: 'Login'}" routerLink="/login"></app-button>
+        <a class="btns-text" alt="Login" routerLink="/login">
+          Login
+        </a>
         &nbsp;
-        <app-button class="btns-text" [buttonConfig]="{text: 'Register'}" routerLink="/register"></app-button>
+        <a class="btns-text" alt="Register"  routerLink="/register">Register
+        </a>
       </div>
       <app-theme></app-theme>
     </div>
   </div>
   <div class="item2">
     <router-outlet>
-      <!-- <jw-modal id="custom-modal-1">
-        <h1>A Error Occur!</h1>
-        <button (click)="closeModal('custom-modal-1');">Close</button>
-      </jw-modal> -->
     </router-outlet>
   </div>
   <section class="item3" *ngIf="!user">
     <div *ngFor="let data of (selectData$ | async)">
-      <sa-card title = "{{data.title}}" desc = "{{data.description}}" category = "{{data.category}}" year = "{{data.year}}"></sa-card>
+      <sa-card title="{{data.title}}" desc="{{data.description}}" category="{{data.category}}" year="{{data.year}}">
+      </sa-card>
     </div>
   </section>
-</div>
-
+</section>

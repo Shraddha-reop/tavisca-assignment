@@ -16,6 +16,6 @@
  {{ buttonConfig?.text}}
  </button>
 </ng-template>
-<ng-template #image class="img-btn">
- <img alt="image button" [src]="buttonConfig?.src">
+<ng-template #image>
+    <button class="img-btn"><img alt="image button" [src]="buttonConfig?.src"></button>
 </ng-template>

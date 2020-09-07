@@ -11,10 +11,21 @@ storiesOf('Card', module)
         })
     )
     .add(
-        'Default',
+        'Home-Page card',
         () => ({
             template: `
-            <sa-card title = "title" desc = "{{data.description}}" category = "{{data.category}}" year = "{{data.year}}"></sa-card>
+            <sa-card title = 'Card Title' desc = 'Card Description' category = 'Category' year = 'Year'></sa-card>
+            `,
+            props: {
+                title: 'Card Title'
+            }
+        })
+    )
+    .add(
+        'Login User Card',
+        () => ({
+            template: `
+            <sa-card title = 'Card Title' desc = 'Card Description' category = 'Category' year = 'Year' isLoggedIn = true></sa-card>
             `,
             props: {
                 title: 'Card Title'

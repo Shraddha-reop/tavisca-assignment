@@ -22,7 +22,6 @@ import { CardComponent } from '../app/shared-components/card/card.component';
 import { ThemeComponent } from '../app/shared-components/theme-toggle/theme.component';
 import { LoginComponent } from '../app/components/login/login.component';
 import { RegisterComponent } from '../app/components/register/register.component';
-import { ModalComponent } from '../app/shared-components/modal/modal.component';
 
 
 @NgModule({
@@ -33,8 +32,7 @@ import { ModalComponent } from '../app/shared-components/modal/modal.component';
     CardComponent,
     ThemeComponent,
     LoginComponent,
-    RegisterComponent,
-    ModalComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

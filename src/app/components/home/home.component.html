@@ -3,8 +3,8 @@
         <div class="head-line"> <h1>Movie Share</h1><span><img src="../assets/svg/movie-recorder-svgrepo-com.svg"/></span></div>
         <div class="btns">
               <app-theme class="btn-theme"></app-theme>
-            <app-button class="btn-add" [buttonConfig]="{text: 'Add Movies'}" (click)="OnClick()"></app-button>
-          <app-button class="btn-logout" [buttonConfig]="{src: '../../../assets/svg/logout.svg'}" (click)="logout()"></app-button>
+            <a class="btn-add"><app-button  [buttonConfig]="{text: 'Add Movies'}" (click)="OnClick()"></app-button></a>
+          <a><app-button class="btn-logout" [buttonConfig]="{src: '../../../assets/svg/logout.svg'}" (click)="logout()"></app-button></a>
         </div>
         
     </div>

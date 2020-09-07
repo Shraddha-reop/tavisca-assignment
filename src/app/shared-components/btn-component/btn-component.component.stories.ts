@@ -10,13 +10,35 @@ storiesOf('button', module)
         })
     )
     .add(
-        'Default',
+        'Text-Button',
         () => ({
             template: `
                 <app-button  [buttonConfig]="{text: 'Login'}" ></app-button>
             `,
             props: {
                 buttonConfig: '{text: "Login"}'
+            }
+        })
+    )
+    .add(
+        'Image-Button-Update',
+        () => ({
+            template: `
+                <app-button  [buttonConfig]="{src: '../../../assets/svg/update.svg'}" ></app-button>
+            `,
+            props: {
+                buttonConfig: '{src: "../../../assets/svg/update.svg"}'
+            }
+        })
+    )
+    .add(
+        'Image-Button-Delete',
+        () => ({
+            template: `
+                <app-button  [buttonConfig]="{src: '../../../assets/svg/delete.svg'}" ></app-button>
+            `,
+            props: {
+                buttonConfig: '{src: "../../../assets/svg/delete.svg"}'
             }
         })
     );

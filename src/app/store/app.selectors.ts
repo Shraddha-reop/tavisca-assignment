@@ -17,3 +17,10 @@ export const selectIsLoggedIn = createSelector(
         return state.isLoggedIn;
     }
 );
+
+export const selectError = createSelector(
+    selectApp,
+    (state: AppModelState) => {
+        return state.error;
+    }
+);

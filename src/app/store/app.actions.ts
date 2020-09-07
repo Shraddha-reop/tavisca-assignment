@@ -15,6 +15,10 @@ export enum AppActionType {
     UPDATE_LINK = 'Activity: UPDATE_LINK',
     UPDATE_LINK_SUCCESS = 'Activity: UPDATE_LINK_SUCCESS',
     UPDATE_LINK_ERROR = 'Activity: UPDATE_LINK_SUCCESS',
+    IS_ERROR = 'Activity: IS_ERROR',
+    USER_LOGIN = 'Activity: USER_LOGIN',
+    USER_LOGIN_SUCCESS = 'Activity: USER_LOGIN_SUCCESS',
+    USER_LOGIN_ERROR = 'Activity: USER_LOGIN_ERROR'
 }
 
 export class FetchUserData implements Action {
@@ -82,10 +86,34 @@ export class UpdateLinkError implements Action {
     constructor(public error: any) { }
 }
 
+export class IsError implements Action {
+    readonly type = AppActionType.IS_ERROR;
+    constructor(public err: any) { }
+}
+
+export class UserLogin implements Action {
+    readonly type = AppActionType.USER_LOGIN;
+    constructor(public username: any, public password: any) { }
+}
+
+export class UserLoginSuccess implements Action {
+    readonly type = AppActionType.USER_LOGIN_SUCCESS;
+    constructor(public payload: any) { }
+}
+
+export class UserLoginError implements Action {
+    readonly type = AppActionType.USER_LOGIN_ERROR;
+    constructor(public err: any) { }
+}
+
 export type AppAction =
     | FetchUserData
     | FetchUserDataSuccess
     | IsLoggedIn
     | SaveSharedLinks
     | SaveSharedLinksSuccess
-    | SaveSharedLinksError;
+    | SaveSharedLinksError
+    | IsError
+    | UserLogin
+    | UserLoginSuccess
+    | UserLoginError;

@@ -11,7 +11,7 @@ import { first } from 'rxjs/operators';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
-  loading = false;
+  public error ;
   submitted = false;
 
   constructor(
@@ -36,8 +36,6 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
-    this.loading = true;
     this.accountService.register(this.form.value)
       .pipe(first())
       .subscribe({
@@ -45,7 +43,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['../login'], { relativeTo: this.route });
         },
         error: error => {
-          this.loading = false;
+          this.error = error;
         }
       });
   }
